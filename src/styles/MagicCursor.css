@@ -1,0 +1,81 @@
+.magic-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s ease;
+}
+
+.cursor-star {
+    filter: none;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.magic-cursor.clicking .cursor-star {
+    transform: scale(1.5) rotate(180deg);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.473)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.596)) drop-shadow(0 0 45px rgba(255, 255, 255, 0.671));
+}
+
+.magic-cursor.clicking .cursor-star path {
+    fill-opacity: 1;
+}
+
+.cursor-trail {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: trailFade 1s ease-out forwards;
+}
+
+.cursor-trail.clicking::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.7) 40%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(0.5px);
+}
+
+.cursor-trail.clicking::after {
+    content: '·';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(157, 202, 253);
+    font-size: 6px;
+    text-shadow: 0 0 4px rgb(153, 213, 248),
+        0 0 8px rgba(159, 189, 253, 0.8);
+}
+
+@keyframes trailFade {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.7);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.1);
+    }
+}
+
+/* Hide default cursor globally */
+body,
+a,
+button,
+.choice-card,
+* {
+    cursor: none !important;
+}

@@ -1,0 +1,62 @@
+:root {
+    --card-size: 300px;
+    --card-radius: 20px;
+    --card-scale: 0.9;
+    --card-hover-scale: 1.05;
+}
+
+.card-container {
+    perspective: 800px;
+    transform: scale(0.9);
+    transition: transform 0.25s ease;
+    display: inline-block;
+    line-height: 0;
+    /*seçilemez yaptım*/
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.card-container:hover {
+    transform: scale(1.05);
+}
+
+.card-tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    overflow: hidden;
+    box-shadow: 0px 5px 10px rgba(92, 99, 156, 0.3);
+    display: block;
+    border-radius: var(--card-radius);
+}
+
+.card {
+    position: relative;
+    backface-visibility: hidden;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    display: block;
+}
+
+.card-image {
+    display: block;
+    width: var(--card-size);
+    height: auto;
+    border-radius: var(--card-radius);
+}
+
+.card-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    padding: 40px;
+    font-size: 24px;
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease;
+    user-select: none;
+    /* text kısmını dokunulamaz yaptık burada */
+    -webkit-user-select: none;
+    /* safaride farklıymış */
+}

@@ -1,0 +1,30 @@
+{
+    "PLAYER_ROOM": {
+        "name": "Dedektifin Odası",
+        "description": "Telefon çalıyor. Müdür seni olay yerine çağırıyor.",
+        "choices": [
+            {
+                "text": "Olay yerine git",
+                "next": "CRIME_SCENE"
+            },
+            {
+                "text": "Lobiye in",
+                "next": "LOBBY"
+            }
+        ]
+    },
+    "CRIME_SCENE": {
+        "name": "Olay Yeri - Süit 303",
+        "description": "Ceset odada. Her yer karanlık.",
+        "choices": [
+            {
+                "text": "Cesede bak",
+                "next": "CLUE_1"
+            },
+            {
+                "text": "Lobiye dön",
+                "next": "LOBBY"
+            }
+        ]
+    }
+}
