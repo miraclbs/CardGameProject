@@ -13,7 +13,6 @@ h1 {
   color: #ffffff;
   font-size: 52px;
   margin-bottom: 10px;
-  /*seçilemez yaptım*/
   user-select: none;
   -webkit-user-select: none;
 }
@@ -23,7 +22,6 @@ p {
   max-width: 600px;
   font-size: 24px;
   opacity: 0.9;
-  /*seçilemez yaptım*/
   user-select: none;
   -webkit-user-select: none;
 }
@@ -35,5 +33,4 @@ p {
   align-items: center;
   flex-wrap: wrap;
   padding: 20px 0;
-  /* ekran küçülürse otomatik alta insin */
 }

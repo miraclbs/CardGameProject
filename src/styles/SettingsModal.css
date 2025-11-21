@@ -1,0 +1,126 @@
+.settings-backdrop {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(77, 77, 77, 0.25), transparent),
+        rgba(1, 3, 15, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 80;
+}
+
+.settings-modal {
+    position: relative;
+    width: 600px;
+    max-width: 90%;
+    aspect-ratio: 600 / 400;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(48, 50, 59, 0.9);
+    background-image: url("/img/settings-bg.png");
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+.settings-modal h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-align: center;
+    z-index: 10;
+}
+
+.settings-close {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: #8B7355;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.settings-close:hover {
+    transform: scale(1.1) rotate(90deg);
+    filter: drop-shadow(0 0 8px rgba(139, 115, 85, 0.6));
+}
+
+.settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 10;
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 0px 10px;
+}
+
+.settings-switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+}
+
+.settings-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.settings-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    transition: 0.2s;
+}
+
+.settings-slider::before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    top: 3px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    transition: 0.2s;
+}
+
+.settings-switch input:checked+.settings-slider {
+    background: linear-gradient(135deg, #634434, #919150);
+}
+
+.settings-switch input:checked+.settings-slider::before {
+    transform: translateX(24px);
+}
+
+.settings-hint {
+    margin-top: 12px;
+    font-size: 14px;
+    opacity: 0.8;
+}

@@ -3,12 +3,10 @@
     pointer-events: none;
     z-index: 10000;
     transform: translate(-50%, -50%);
-    transition: transform 0.05s ease;
 }
 
 .cursor-star {
-    filter: none;
-    transition: transform 0.2s ease, filter 0.2s ease;
+    transition: transform 0.4s ease, filter 0.2s ease;
 }
 
 .magic-cursor.clicking .cursor-star {
@@ -71,7 +69,7 @@
     }
 }
 
-/* Hide default cursor globally */
+
 body,
 a,
 button,

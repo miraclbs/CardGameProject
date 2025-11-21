@@ -1,8 +1,6 @@
 :root {
     --card-size: 300px;
     --card-radius: 20px;
-    --card-scale: 0.9;
-    --card-hover-scale: 1.05;
 }
 
 .card-container {
@@ -11,7 +9,6 @@
     transition: transform 0.25s ease;
     display: inline-block;
     line-height: 0;
-    /*seçilemez yaptım*/
     user-select: none;
     -webkit-user-select: none;
 }
@@ -56,7 +53,5 @@
     transform-style: preserve-3d;
     transition: transform 0.15s ease;
     user-select: none;
-    /* text kısmını dokunulamaz yaptık burada */
     -webkit-user-select: none;
-    /* safaride farklıymış */
 }

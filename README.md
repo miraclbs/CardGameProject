@@ -11,7 +11,9 @@ A simple detective storytelling game. You click on cards to go to different loca
 - Choice-based story system
 - 3D card animations (follows mouse movement)
 - Video animations on hover
-- Custom cursor animation
+- Custom cursor animation with particle effects
+- Settings modal for music and sound effects
+- Audio system for interactions
 - Story management through JSON
 
 # Installation
@@ -44,11 +46,18 @@ Open your browser and go to `http://localhost:5173`.
 # References
 
 - Card animation: ProgrammerCloud Youtube Channel
+
 https://www.youtube.com/@ProgrammerCloud/shorts
+https://www.youtube.com/shorts/Sd-GyReNr3U 
+
 ----------------------------------------------------
+
 - Font: FontSpace Website
+
 https://www.fontspace.com/
 
 
 
-Atif Miraç İlbaş - 21125030
+
+
+# Atif Miraç İlbaş - 21125030

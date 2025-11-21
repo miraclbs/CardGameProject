@@ -1,5 +1,7 @@
+import { useRef } from "react";
 import { useCardTilt } from "../hooks/useCardTilt";
 import "../styles/ChoiceCard.css";
+import audio from "../utils/audioManager";
 
 export default function ChoiceCard({ text, onSelect }) {
     const {
@@ -13,10 +15,16 @@ export default function ChoiceCard({ text, onSelect }) {
         onExit
     } = useCardTilt();
 
+
+    const cardClick = () => {
+        audio.playCardSound();
+        onSelect();
+    }
+
     return (
         <div
             className="card-container"
-            onClick={onSelect}
+            onClick={cardClick}
             onMouseMove={onMove}
             onMouseEnter={onEnter}
             onMouseLeave={onExit}
@@ -34,6 +42,7 @@ export default function ChoiceCard({ text, onSelect }) {
                         src="/anim/moonAnim1080.mp4"
                         loop
                         muted
+                        preload="auto"
                         className="card-image"
                         style={{ display: showAnim ? "block" : "none" }}
                     />
