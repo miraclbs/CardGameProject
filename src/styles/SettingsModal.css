@@ -15,7 +15,7 @@
     max-width: 90%;
     aspect-ratio: 600 / 400;
     padding: 0;
-    border-radius: 8px;
+    border-radius: 25px;
     box-shadow: 0 0 30px rgba(48, 50, 59, 0.9);
     background-image: url("/img/settings-bg.png");
     background-size: 100% 100%;
@@ -24,10 +24,7 @@
     align-items: center;
     justify-content: center;
     border: none;
-    user-select: none;
-    -webkit-user-select: none;
 }
-
 
 .settings-modal h2 {
     font-size: 28px;
@@ -39,8 +36,8 @@
 
 .settings-close {
     position: absolute;
-    top: 20px;
-    right: 22px;
+    top: 24px;
+    right: 20px;
     width: 32px;
     height: 32px;
     border: none;
@@ -117,10 +114,4 @@
 
 .settings-switch input:checked+.settings-slider::before {
     transform: translateX(24px);
-}
-
-.settings-hint {
-    margin-top: 12px;
-    font-size: 14px;
-    opacity: 0.8;
 }

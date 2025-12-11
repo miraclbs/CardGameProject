@@ -5,13 +5,12 @@ import audio from "../utils/audioManager";
 export default function SettingsModal({ isOpen, onClose }) {
     if (!isOpen) return null;
 
-
     const [music, setMusic] = useState(audio.musicOn);
     const [sfx, setSfx] = useState(audio.sfxOn);
+
     const toggleMusic = (value) => {
         setMusic(value);
         audio.musicOn = value;
-
         value ? audio.playMusic() : audio.stopMusic();
         audio.playSfx();
     };
@@ -21,6 +20,7 @@ export default function SettingsModal({ isOpen, onClose }) {
         audio.sfxOn = value;
         audio.playSfx();
     };
+
     return (
         <div className="settings-backdrop" onClick={onClose}>
             <div
@@ -43,10 +43,7 @@ export default function SettingsModal({ isOpen, onClose }) {
                             <input
                                 type="checkbox"
                                 checked={music}
-                                onChange={(e) => {
-
-                                    toggleMusic(e.target.checked)
-                                }}
+                                onChange={(e) => toggleMusic(e.target.checked)}
                             />
                             <span className="settings-slider" />
                         </label>
@@ -58,18 +55,13 @@ export default function SettingsModal({ isOpen, onClose }) {
                             <input
                                 type="checkbox"
                                 checked={sfx}
-                                onChange={(e) => {
-
-                                    toggleSfx(e.target.checked)
-                                }}
+                                onChange={(e) => toggleSfx(e.target.checked)}
                             />
                             <span className="settings-slider" />
                         </label>
                     </div>
 
-                    <p className="settings-hint">
-                        * Müzik ve ses efektleri kontrol et
-                    </p>
+
                 </div>
             </div>
         </div>

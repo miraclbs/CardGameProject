@@ -1,24 +1,13 @@
 import "../styles/SettingsButton.css";
 import audio from "../utils/audioManager";
 
-function SettingsButton({ onSettingsClick }) {
-
+export default function SettingsButton({ onSettingsClick }) {
     const settingsClick = () => {
         audio.play("settings");
         onSettingsClick();
     }
 
-
     return (
-        <div>
-            <button
-                className="settings-button"
-                onClick={settingsClick}
-            >
-
-            </button>
-        </div>
-    )
+        <button className="settings-button" onClick={settingsClick}></button>
+    );
 }
-
-export default SettingsButton

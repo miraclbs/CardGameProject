@@ -1,0 +1,14 @@
+.magic-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+}
+
+body,
+a,
+button,
+.choice-card,
+* {
+    cursor: none !important;
+}

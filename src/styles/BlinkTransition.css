@@ -1,0 +1,70 @@
+.blink-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+}
+
+.blink-top,
+.blink-bottom {
+    width: 100%;
+    height: 0%;
+    background: #000;
+    transition: height 0.3s ease-in-out;
+}
+
+.blink-overlay.active .blink-top,
+.blink-overlay.active .blink-bottom {
+    height: 50%;
+}
+
+@keyframes blink {
+    0% {
+        height: 0%;
+    }
+
+    40% {
+        height: 50%;
+    }
+
+    60% {
+        height: 50%;
+    }
+
+    100% {
+        height: 0%;
+    }
+}
+
+.blink-overlay.animating .blink-top,
+.blink-overlay.animating .blink-bottom {
+    animation: blink 1.2s ease-in-out forwards;
+}
+
+@keyframes blink-fast {
+    0% {
+        height: 0%;
+    }
+
+    30% {
+        height: 50%;
+    }
+
+    70% {
+        height: 50%;
+    }
+
+    100% {
+        height: 0%;
+    }
+}
+
+.blink-overlay.animating.fast .blink-top,
+.blink-overlay.animating.fast .blink-bottom {
+    animation: blink-fast 0.8s ease-in-out forwards;
+}

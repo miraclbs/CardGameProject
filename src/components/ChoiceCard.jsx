@@ -1,52 +1,49 @@
-import { useRef } from "react";
 import { useCardTilt } from "../hooks/useCardTilt";
+import { useEffect } from "react";
 import "../styles/ChoiceCard.css";
 import audio from "../utils/audioManager";
 
-export default function ChoiceCard({ text, onSelect }) {
-    const {
-        wrapperEl,
-        labelEl,
-        cardEl,
-        animEl,
-        showAnim,
-        onMove,
-        onEnter,
-        onExit
-    } = useCardTilt();
+export default function ChoiceCard({
+    text,
+    impact,
+    onSelect,
+    isLoading = false,
+    cardImage = null
+}) {
+    const { wrapperEl, labelEl, cardEl, onMove, onExit } = useCardTilt();
 
+    useEffect(() => {
+        if (isLoading) {
+            audio.playLockedCardSound();
+            onExit();
+        }
+    }, [isLoading]);
 
-    const cardClick = () => {
+    const handleClick = () => {
+        if (isLoading) return;
+
         audio.playCardSound();
+        onExit();
         onSelect();
-    }
+    };
 
     return (
         <div
             className="card-container"
-            onClick={cardClick}
+            onClick={handleClick}
             onMouseMove={onMove}
-            onMouseEnter={onEnter}
             onMouseLeave={onExit}
         >
             <div className="card-tilt" ref={wrapperEl}>
                 <div className="card" ref={cardEl}>
-                    <img
-                        src="/img/moon.jpg"
-                        alt="card"
-                        className="card-image"
-                        style={{ display: showAnim ? "none" : "block" }}
-                    />
-                    <video
-                        ref={animEl}
-                        src="/anim/moonAnim1080.mp4"
-                        loop
-                        muted
-                        preload="auto"
-                        className="card-image"
-                        style={{ display: showAnim ? "block" : "none" }}
-                    />
-                    <div className="card-text" ref={labelEl}>{text}</div>
+                    <img src={cardImage} alt="card" className="card-image" />
+
+                    {!isLoading && (
+                        <div className="card-text" ref={labelEl}>
+                            <span className="choice-text">{text}</span>
+                            {impact && <span className="choice-impact">{impact}</span>}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
