@@ -29,3 +29,7 @@ dist-ssr
 
 # Mercurial
 .hg/
+
+# Large audio files
+public/sounds/*.wav
+public/sounds/*.mp3
