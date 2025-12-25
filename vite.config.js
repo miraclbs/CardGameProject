@@ -6,14 +6,14 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api/deepseek': {
-        target: 'https://api.deepseek.com',
+      '/api/openai': {
+        target: 'https://api.openai.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/deepseek/, ''),
+        rewrite: (path) => path.replace(/^\/api\/openai/, ''),
         configure: (proxy, options) => {
           proxy.on('proxyReq', (proxyReq, req, res) => {
             // API key'i env'den al ve header'a ekle
-            const apiKey = process.env.VITE_DEEPSEEK_API_KEY;
+            const apiKey = process.env.VITE_OPENAI_API_KEY;
             if (apiKey) {
               proxyReq.setHeader('Authorization', `Bearer ${apiKey}`);
             }

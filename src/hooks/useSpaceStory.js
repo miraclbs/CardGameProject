@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { generateNextScene } from "../utils/deepseekAPI";
+import { generateNextScene } from "../utils/openaiAPI";
 import {
     SPACE_INTRO_SCENE,
     SPACE_GAME_OVER_SCENE,
@@ -31,7 +31,6 @@ export function useSpaceStory(story) {
         try {
             const oxygenBefore = currentOxygen;
 
-            // Find selected choice to get all its data
             const selectedChoice = currentScene.choices.find(c => c.text === choiceText);
             if (!selectedChoice) {
                 throw new Error("Secim bulunamadi");
@@ -39,22 +38,17 @@ export function useSpaceStory(story) {
 
             const oxygenChange = selectedChoice.oxygenChange || 0;
 
-            // Show result narrative first
             setCurrentNarrative(selectedChoice.resultNarrative);
             setShowNarrative(true);
 
-            // Calculate new oxygen
             const newOxygen = calculateOxygenChange(currentOxygen, oxygenChange);
 
-            // Check for game over
             if (isGameOver(newOxygen)) {
                 setCurrentOxygen(0);
 
-                // Add to history
                 const historyEntry = createHistoryEntry(currentScene, selectedChoice, oxygenBefore, 0);
                 setStoryHistory([...storyHistory, historyEntry]);
 
-                // After narrative, show game over
                 setTimeout(() => {
                     setShowNarrative(false);
                     setCurrentScene(SPACE_GAME_OVER_SCENE);
@@ -63,7 +57,6 @@ export function useSpaceStory(story) {
                 return;
             }
 
-            // Generate next scene from AI (in background while showing narrative)
             const systemPrompt = buildSpaceSystemPrompt();
             const userPrompt = buildSpaceUserPrompt(selectedChoice, newOxygen, storyHistory);
 
@@ -75,19 +68,15 @@ export function useSpaceStory(story) {
                 null
             );
 
-            // Validate scene has all required fields
             if (!validateSpaceScene(nextScene)) {
                 throw new Error("AI yaniti eksik alanlar iceriyor");
             }
 
-            // Store next scene data
             setNextSceneData({ scene: nextScene, oxygen: newOxygen });
 
-            // Add to history
             const historyEntry = createHistoryEntry(currentScene, selectedChoice, oxygenBefore, newOxygen);
             setStoryHistory([...storyHistory, historyEntry]);
 
-            // AI isteği tamamlandı, loading'i kapat
             setIsLoading(false);
 
         } catch (err) {
@@ -119,7 +108,7 @@ export function useSpaceStory(story) {
             setCurrentScene(SPACE_INTRO_SCENE);
             setCurrentOxygen(SPACE_INTRO_SCENE.oxygen);
             setStoryHistory([]);
-            setShowChoices(true); // Kartları hemen göster (ikinci göz kırpmadan sonra görünecek)
+            setShowChoices(true);
         } catch (err) {
             setError(err.message);
             setIsLoading(false);
@@ -128,7 +117,6 @@ export function useSpaceStory(story) {
         setIsLoading(false);
     };
 
-    // Tüm state'i sıfırla (Game Over'dan restart için)
     const resetStory = () => {
         setCurrentScene(null);
         setCurrentOxygen(SPACE_INTRO_SCENE.oxygen);

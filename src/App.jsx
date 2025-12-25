@@ -9,13 +9,16 @@ import GameScreen from "./components/GameScreen";
 import GameOver from "./components/GameOver";
 import StoryIntro from "./components/StoryIntro";
 import BlinkTransition from "./components/BlinkTransition";
+import Login from "./components/Login";
 import { useSpaceStory } from "./hooks/useSpaceStory";
 import { useScreenTransition } from "./hooks/useScreenTransition";
 import { useBlinkTransition } from "./hooks/useBlinkTransition";
+import { useAuth } from "./hooks/useAuth";
 import audio from "./utils/audioManager";
 
 export default function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const { user, isLoggedIn, logout, isLoading: authLoading } = useAuth();
   const { screenState, selectStory, showIntro, showGameScreen, reset } = useScreenTransition();
   const { blinkState, handlers } = useBlinkTransition({
     onFirstMidpoint: () => {
@@ -47,6 +50,23 @@ export default function App() {
     }
   }, [screenState.selectedStory, spaceStory.currentScene, spaceStory.isLoading, spaceStory]);
 
+  if (authLoading) {
+    return (
+      <div className="auth-loading">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <>
+        <Cursor />
+        <Login />
+      </>
+    );
+  }
+
   if (screenState.selectedStory && (spaceStory.isLoading && !spaceStory.currentScene)) {
     return <LoadingScreen />;
   }
@@ -62,6 +82,10 @@ export default function App() {
   return (
     <>
       <Cursor />
+      <div className="rotate-device-overlay">
+        <div className="rotate-icon">📱</div>
+        <p>Oyunu oynamak için lütfen telefonunuzu yatay konuma çevirin</p>
+      </div>
       <div style={{ display: screenState.showSelector ? 'block' : 'none' }}>
         <StorySelector onSelectStory={handleStorySelect} />
       </div>
@@ -87,12 +111,15 @@ export default function App() {
             showNarrative={spaceStory.showNarrative}
             currentNarrative={spaceStory.currentNarrative}
             onNarrativeComplete={spaceStory.completeNarrative}
+            storyHistory={spaceStory.storyHistory}
           />
         </div>
       )}
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
+        user={user}
+        onLogout={logout}
       />
       {blinkState.showFirstBlink && (
         <BlinkTransition
@@ -113,3 +140,4 @@ export default function App() {
     </>
   );
 }
+

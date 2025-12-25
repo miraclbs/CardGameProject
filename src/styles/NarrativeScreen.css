@@ -95,3 +95,31 @@
         opacity: 1;
     }
 }
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .narrative-content {
+        max-width: 95%;
+        padding: 1.5rem;
+    }
+
+    .narrative-text {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+
+    .narrative-loader {
+        font-size: 0.85rem;
+    }
+}
+
+@media screen and (max-height: 400px) and (orientation: landscape) {
+    .narrative-content {
+        padding: 1rem;
+    }
+
+    .narrative-text {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+}

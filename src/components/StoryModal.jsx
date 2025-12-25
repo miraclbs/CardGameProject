@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
+import '../styles/StoryModal.css';
 
-export default function StoryModal({ isOpen, onClose, storyContent }) {
+export default function StoryModal({ isOpen, onClose, introScene, storyHistory = [], currentScene }) {
     useEffect(() => {
         const handleEscape = (e) => {
             if (e.key === 'Escape' && isOpen) {
@@ -14,69 +15,65 @@ export default function StoryModal({ isOpen, onClose, storyContent }) {
 
     if (!isOpen) return null;
 
-    const overlayStyle = {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1000,
-    };
-
-    const contentStyle = {
-        backgroundColor: '#1a1a2e',
-        padding: '2rem',
-        borderRadius: '10px',
-        maxWidth: '600px',
-        width: '90%',
-        maxHeight: '80vh',
-        overflow: 'auto',
-        position: 'relative',
-        color: '#fff',
-        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
-    };
-
-    const closeButtonStyle = {
-        position: 'absolute',
-        top: '10px',
-        right: '15px',
-        background: 'none',
-        border: 'none',
-        fontSize: '2rem',
-        color: '#fff',
-        cursor: 'pointer',
-        opacity: 0.7,
-        transition: 'opacity 0.3s',
-    };
-
     return (
-        <div style={overlayStyle} onClick={onClose}>
-            <div style={contentStyle} onClick={(e) => e.stopPropagation()}>
-                <button
-                    style={closeButtonStyle}
-                    onClick={onClose}
-                    onMouseEnter={(e) => e.target.style.opacity = '1'}
-                    onMouseLeave={(e) => e.target.style.opacity = '0.7'}
-                >
-                    ×
-                </button>
-                <div>
-                    <h2 style={{ marginBottom: '1rem', fontSize: '1.8rem' }}>
-                        {storyContent?.name || "Başlangıç Hikayesi"}
-                    </h2>
-                    <p style={{ marginBottom: '1rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
-                        {storyContent?.description}
-                    </p>
-                    {storyContent?.narrative && (
-                        <p style={{ fontSize: '1rem', lineHeight: '1.6', opacity: 0.9 }}>
-                            {storyContent?.narrative}
-                        </p>
+        <div className="story-modal-overlay" onClick={onClose}>
+            <div className="story-modal-content" onClick={(e) => e.stopPropagation()}>
+                <button className="story-modal-close" onClick={onClose}>×</button>
+
+                <h2 className="story-modal-title">📜 Hikaye Özeti</h2>
+
+                <div className="story-timeline">
+                    {introScene && (
+                        <div className="timeline-item intro">
+                            <div className="timeline-marker">📍</div>
+                            <div className="timeline-content">
+                                <h3>{introScene.name}</h3>
+                                <p>{introScene.description}</p>
+                                {introScene.narrative && (
+                                    <p className="narrative-text">{introScene.narrative}</p>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {storyHistory.map((entry, index) => {
+                        const oxygenChange = entry.oxygenAfter - entry.oxygenBefore;
+                        return (
+                            <div key={index} className="timeline-item">
+                                <div className="timeline-marker">{index + 1}</div>
+                                <div className="timeline-content">
+                                    <div className="choice-made">
+                                        <span className="choice-label">Seçim:</span>
+                                        <span className="choice-text">{entry.choice}</span>
+                                    </div>
+                                    {entry.result && (
+                                        <p className="result-text">{entry.result}</p>
+                                    )}
+                                    <div className="oxygen-change">
+                                        <span className={`oxygen-badge ${oxygenChange > 0 ? 'positive' : oxygenChange < 0 ? 'negative' : 'neutral'}`}>
+                                            O₂: {oxygenChange > 0 ? '+' : ''}{oxygenChange}%
+                                        </span>
+                                        <span className="oxygen-total">({entry.oxygenAfter}%)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+
+                    {currentScene && storyHistory.length > 0 && (
+                        <div className="timeline-item current">
+                            <div className="timeline-marker">📍</div>
+                            <div className="timeline-content">
+                                <h3>Şu an: {currentScene.name}</h3>
+                                <p>{currentScene.description}</p>
+                            </div>
+                        </div>
                     )}
                 </div>
+
+                {storyHistory.length === 0 && (
+                    <p className="no-progress">Henüz ilerleme kaydedilmedi. Seçimler yaptıkça hikaye burada görünecek.</p>
+                )}
             </div>
         </div>
     );

@@ -1,9 +1,9 @@
 import { buildSystemPrompt, buildUserPrompt } from './promptBuilder';
 
-const API_KEY = import.meta.env.VITE_DEEPSEEK_API_KEY;
-const API_URL = "/api/deepseek/chat/completions";
+const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+const API_URL = "/api/openai/v1/chat/completions";
 
-async function callDeepSeekAPI(systemPrompt, userPrompt, temperature = 0.3, maxTokens = 800) {
+async function callOpenAI(systemPrompt, userPrompt, temperature = 0.7, maxTokens = 800) {
     try {
         const response = await fetch(API_URL, {
             method: "POST",
@@ -12,7 +12,7 @@ async function callDeepSeekAPI(systemPrompt, userPrompt, temperature = 0.3, maxT
                 Authorization: "Bearer " + API_KEY,
             },
             body: JSON.stringify({
-                model: "deepseek-chat",
+                model: "gpt-4o-mini",
                 messages: [
                     { role: "system", content: systemPrompt },
                     { role: "user", content: userPrompt }
@@ -23,13 +23,13 @@ async function callDeepSeekAPI(systemPrompt, userPrompt, temperature = 0.3, maxT
         });
 
         if (!response.ok) {
-            throw new Error("API Hatasi: " + response.statusText);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error("API Hatası: " + (errorData.error?.message || response.statusText));
         }
 
         const data = await response.json();
         return data.choices[0].message.content.trim();
     } catch (error) {
-        console.error("API Error:", error);
         throw error;
     }
 }
@@ -53,7 +53,6 @@ function parseJSONResponse(content) {
 
         return scene;
     } catch (firstError) {
-        console.warn("First parse failed, attempting to fix JSON...");
 
         try {
             let fixedContent = content;
@@ -82,28 +81,21 @@ function parseJSONResponse(content) {
 
             const scene = JSON.parse(fixedContent);
 
-            // Validate structure
             if (!scene.name || !scene.description || !scene.choices || !Array.isArray(scene.choices)) {
                 throw new Error("Invalid scene structure");
             }
 
-            console.log("JSON fixed successfully!");
             return scene;
         } catch (secondError) {
-            console.error("JSON Parse Error:", firstError);
-            console.error("Second attempt failed:", secondError);
-            console.error("AI Response:", content);
-            throw new Error("AI yaniti gecersiz JSON formatinda. Lutfen tekrar deneyin.");
+            throw new Error("AI yanıtı geçersiz JSON formatında. Lütfen tekrar deneyin.");
         }
     }
 }
-
-
 
 export async function generateNextScene(storyHistory, lastChoice, story, currentOxygen, introScene) {
     const systemPrompt = buildSystemPrompt(story);
     const userPrompt = buildUserPrompt(story, lastChoice, currentOxygen);
 
-    const content = await callDeepSeekAPI(systemPrompt, userPrompt, 0.3, 800);
+    const content = await callOpenAI(systemPrompt, userPrompt, 0.7, 800);
     return parseJSONResponse(content);
 }

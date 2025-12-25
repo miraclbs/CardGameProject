@@ -4,6 +4,7 @@ import SettingsButton from "./SettingsButton";
 import ChoiceCard from "./ChoiceCard";
 import StoryModal from "./StoryModal";
 import NarrativeScreen from "./NarrativeScreen";
+import "../styles/StoryButton.css";
 
 export default function GameScreen({
     scene,
@@ -16,7 +17,8 @@ export default function GameScreen({
     showChoices = true,
     showNarrative = false,
     currentNarrative = "",
-    onNarrativeComplete
+    onNarrativeComplete,
+    storyHistory = []
 }) {
     const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
     const appStyle = selectedStory?.backgroundImg
@@ -28,43 +30,19 @@ export default function GameScreen({
         }
         : {};
 
-    const storyButtonStyle = {
-        position: 'fixed',
-        top: '20px',
-        left: '20px',
-        width: '50px',
-        height: '50px',
-        borderRadius: '50%',
-        backgroundColor: 'rgba(26, 26, 46, 0.8)',
-        border: '2px solid rgba(255, 255, 255, 0.3)',
-        fontSize: '1.5rem',
-        cursor: 'pointer',
-        transition: 'all 0.3s ease',
-        zIndex: 100,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    };
-
     return (
         <>
             <Cursor />
             <div className="app" style={appStyle}>
-                <button
-                    style={storyButtonStyle}
-                    onClick={() => setIsStoryModalOpen(true)}
-                    title="Başlangıç Hikayesi"
-                    onMouseEnter={(e) => {
-                        e.target.style.transform = 'scale(1.1)';
-                        e.target.style.backgroundColor = 'rgba(26, 26, 46, 0.95)';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.target.style.transform = 'scale(1)';
-                        e.target.style.backgroundColor = 'rgba(26, 26, 46, 0.8)';
-                    }}
-                >
-                    📖
-                </button>
+                <div className="top-left-buttons">
+                    <button
+                        className="story-button"
+                        onClick={() => setIsStoryModalOpen(true)}
+                        title="Hikaye Özeti"
+                    >
+                        📖
+                    </button>
+                </div>
                 <SettingsButton onSettingsClick={onSettingsClick} />
                 {selectedStory?.id === 'space' && currentOxygen !== null && (
                     <div className="oxygen-tank-container">
@@ -102,7 +80,9 @@ export default function GameScreen({
             <StoryModal
                 isOpen={isStoryModalOpen}
                 onClose={() => setIsStoryModalOpen(false)}
-                storyContent={introScene}
+                introScene={introScene}
+                storyHistory={storyHistory}
+                currentScene={scene}
             />
             {showNarrative && (
                 <NarrativeScreen

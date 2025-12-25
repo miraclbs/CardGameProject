@@ -6,21 +6,21 @@ export const SPACE_INTRO_SCENE = {
     choices: [
         {
             text: "Oksijen borusunu bantla",
-            impact: "Sabitlemeyi dene",
+            impact: "Belki gecici bir cozum...",
             oxygenChange: 0,
             resultNarrative: "Yapiştirıcı bantı titreyen ellerinle boruya doluyorsun. Sistem bir anlığına duraliyor ama oksijen hala azaliyor.",
             promptHint: "Oyuncu bant ile hizli cozum aradi ama kalici degil"
         },
         {
             text: "Enerji taramasi yap",
-            impact: "Yakin istasyon ara",
+            impact: "Disarida neler gizli acaba?",
             oxygenChange: 0,
             resultNarrative: "Acil kapsule inip radar ekranina bakiyorsun. 300km oteде zayif bir sinyal var... Belki bir umut.",
             promptHint: "Oyuncu yakinlarda bir istasyon kesfetti"
         },
         {
             text: "Manuel sistemi baslat",
-            impact: "Kontrol dene",
+            impact: "Eski teknoloji bazen ise yarar...",
             oxygenChange: 0,
             resultNarrative: "Koprü bolumune kosuyorsun. Eski kontrol panellerini acıp kabloları birlestiriyorsun. Gemi hafifçe titriyor.",
             promptHint: "Oyuncu gemiyi manuel kontrol altina almayi denedi"
@@ -48,16 +48,27 @@ KURAL:
 - 2-4 arasi secim sun
 - Her secimde su alanlar OLMALI:
   * text: Kisa secim metni (5-8 kelime) - TIRNAK ICINDE
-  * impact: Etki aciklamasi (4-6 kelime) - TIRNAK ICINDE
+  * impact: HIKAYE ODAKLI belirsiz ipucu (ASLA oksijen veya enerji degisiminden bahsetme!) - TIRNAK ICINDE
   * oxygenChange: Sayi (negatif, pozitif veya sifir) - TIRNAK YOK
   * resultNarrative: Secim yapilinca ne oldugu (1-2 cumle) - TIRNAK ICINDE
   * promptHint: Sonraki sahne icin ipucu (kisa not) - TIRNAK ICINDE
 
+IMPACT ALANI KURALLARI (COK ONEMLI):
+- ASLA "oksijen", "enerji", "kaynak", "arttirir", "azaltir" gibi kelimeler KULLANMA
+- Bunun yerine GIZEMLI ve HIKAYE ODAKLI ipuclari yaz
+- Oyuncu sonucu ONCEDEN BILMEMELI
+- Ornekler:
+  * YANLIS: "Oksijeni arttırır" veya "Riskli ama kaynak kazandırır"
+  * DOGRU: "Karanliga dogru bir adim..." veya "Kim bilir neler bekliyor?"
+  * DOGRU: "Sessizce ilerle..." veya "Bu kapinin ardinda ne var?"
+  * DOGRU: "Belki de son sans..." veya "Eski dostlar yardim eder mi?"
+
 ORNEK GECERLI FORMAT:
-"impact": "Gizemli sese dogru ilerle"
+"impact": "Gizemli sese dogru birsey ilerle"
 
 YANLIS FORMAT (KULLANMA):
-"impact":Gizemli sese dogru ilerle`;
+"impact":Gizemli sese dogru ilerle
+"impact": "Oksijen kazandırır"`;
 }
 
 export function buildSpaceUserPrompt(lastChoice, currentOxygen, storyHistory = []) {

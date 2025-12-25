@@ -196,3 +196,107 @@
   z-index: 3;
   font-family: 'Courier New', monospace;
 }
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .app {
+    min-height: 100dvh;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .story-info {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    max-width: none;
+  }
+
+  .story-info h1 {
+    font-size: 22px;
+    padding: 5px 0;
+  }
+
+  .story-info .description,
+  .story-info .narrative {
+    font-size: 14px;
+    max-width: 100%;
+    line-height: 1.3;
+    margin-top: 5px;
+  }
+
+  .card-wrapper {
+    min-height: auto;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .oxygen-tank-container {
+    left: 10px;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+  }
+
+  .oxygen-tank {
+    width: 35px;
+    height: 120px;
+    border-radius: 6px;
+  }
+
+  .oxygen-percentage {
+    font-size: 0.8rem;
+  }
+
+  .loading-container,
+  .error-container,
+  .no-scene-container {
+    min-height: auto;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .spinner {
+    width: 30px;
+    height: 30px;
+    border-width: 3px;
+  }
+
+  .error-container p {
+    font-size: 14px;
+  }
+
+  .error-container button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-height: 400px) and (orientation: landscape) {
+  .story-info h1 {
+    font-size: 18px;
+  }
+
+  .story-info .description,
+  .story-info .narrative {
+    font-size: 12px;
+  }
+
+  .oxygen-tank {
+    width: 28px;
+    height: 90px;
+  }
+
+  .oxygen-percentage {
+    font-size: 0.65rem;
+  }
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait) {
+
+  .app,
+  .story-selector-container,
+  .login-container {
+    filter: blur(5px);
+    pointer-events: none;
+  }
+}

@@ -35,7 +35,6 @@ class AudioManager {
             this.sounds.cardLock = new Audio("/sounds/card-click-lock.wav");
             this.sounds.settings = new Audio("/sounds/settings-click.mp3");
         } catch (err) {
-            console.error("Ses yükleme hatası:", err);
         }
     }
 
@@ -75,7 +74,6 @@ class AudioManager {
             this.sounds.bgm.volume = 0.5;
             if (this.musicOn) this.playMusic();
         } catch (err) {
-            console.error("Müzik yükleme hatası:", err);
         }
     }
 

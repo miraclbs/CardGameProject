@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/SettingsModal.css";
 import audio from "../utils/audioManager";
 
-export default function SettingsModal({ isOpen, onClose }) {
+export default function SettingsModal({ isOpen, onClose, user, onLogout }) {
     if (!isOpen) return null;
 
     const [music, setMusic] = useState(audio.musicOn);
@@ -21,6 +21,12 @@ export default function SettingsModal({ isOpen, onClose }) {
         audio.playSfx();
     };
 
+    const handleLogout = () => {
+        audio.playSfx();
+        onClose();
+        onLogout();
+    };
+
     return (
         <div className="settings-backdrop" onClick={onClose}>
             <div
@@ -37,6 +43,18 @@ export default function SettingsModal({ isOpen, onClose }) {
                 <h2>Ayarlar</h2>
 
                 <div className="settings-content">
+                    <div className="account-section">
+                        <div className="account-info">
+                            <span className="account-icon">👤</span>
+                            <span className="account-name">{user?.displayName || user?.email}</span>
+                        </div>
+                        <button className="logout-btn" onClick={handleLogout}>
+                            Çıkış Yap
+                        </button>
+                    </div>
+
+                    <div className="settings-divider"></div>
+
                     <div className="settings-row">
                         <span>Müzik</span>
                         <label className="settings-switch">

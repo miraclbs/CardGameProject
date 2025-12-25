@@ -1,5 +1,5 @@
 :root {
-    --card-size: 300px;
+    --card-size: 250px;
     --card-radius: 20px;
 }
 
@@ -79,4 +79,39 @@
     height: 100%;
     object-fit: cover;
     pointer-events: none;
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    :root {
+        --card-size: 150px;
+        --card-radius: 12px;
+    }
+
+    .choice-text {
+        font-size: 16px;
+    }
+
+    .choice-impact {
+        font-size: 12px;
+    }
+
+    .card-text {
+        padding: 10px;
+        gap: 6px;
+    }
+}
+
+@media screen and (max-height: 400px) and (orientation: landscape) {
+    :root {
+        --card-size: 120px;
+        --card-radius: 10px;
+    }
+
+    .choice-text {
+        font-size: 14px;
+    }
+
+    .choice-impact {
+        font-size: 10px;
+    }
 }
