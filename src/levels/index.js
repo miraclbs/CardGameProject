@@ -1,4 +1,5 @@
 import { SPACE_CONFIG } from './space/spaceConfig';
+import { WIZARD_CONFIG } from './wizard/wizardConfig';
 
 export const LEVELS = {
     space: SPACE_CONFIG,
@@ -11,12 +12,8 @@ export const LEVELS = {
         lockedImg: '/img/detective-card-lock.png'
     },
     wizard: {
-        id: 'wizard',
-        name: 'Buyucu Maceralari',
-        description: 'Sihirli dunyada buyulu maceralar yasayacaksin',
-        locked: true,
-        img: '/img/moon-card.png',
-        lockedImg: '/img/moon-card-lock.png'
+        ...WIZARD_CONFIG,
+        locked: false
     }
 };
 

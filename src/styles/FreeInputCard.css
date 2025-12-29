@@ -1,0 +1,118 @@
+.input-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.card-input-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    color: #ffffff;
+}
+
+.input-prompt {
+    width: 100%;
+    text-align: center;
+}
+
+.prompt-text {
+    font-size: 18px;
+    font-weight: 600;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.action-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: white;
+    resize: none;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    text-align: center;
+}
+
+.action-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+
+
+.action-input:disabled {
+    opacity: 0.5;
+}
+
+.hint-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hint-icon {
+    font-size: 14px;
+}
+
+.submit-action-btn {
+    padding: 12px 32px;
+    border: none;
+    border-radius: 12px;
+    color: rgb(115, 118, 133);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.submit-action-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+
+
+.submit-action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .prompt-text {
+        font-size: 14px;
+    }
+
+    .action-input {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .submit-action-btn {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+
+    .card-input-overlay {
+        padding: 12px;
+        gap: 6px;
+    }
+}

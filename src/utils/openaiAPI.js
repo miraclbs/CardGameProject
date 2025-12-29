@@ -34,7 +34,7 @@ async function callOpenAI(systemPrompt, userPrompt, temperature = 0.7, maxTokens
     }
 }
 
-function parseJSONResponse(content) {
+function parseJSONResponse(content, isWizard = false) {
     content = content.replace(/```json/g, '').replace(/```/g, '').trim();
 
     let jsonStart = content.indexOf('{');
@@ -47,8 +47,19 @@ function parseJSONResponse(content) {
     try {
         const scene = JSON.parse(content);
 
-        if (!scene.name || !scene.description || !scene.choices || !Array.isArray(scene.choices)) {
-            throw new Error("Invalid scene structure");
+        // Different validation for wizard vs space
+        if (isWizard) {
+            if (!scene.narrative || !scene.situation) {
+                throw new Error("Invalid wizard response structure");
+            }
+            // Ensure progress is a number
+            if (scene.progress === undefined || scene.progress === null) {
+                scene.progress = 0;
+            }
+        } else {
+            if (!scene.name || !scene.description || !scene.choices || !Array.isArray(scene.choices)) {
+                throw new Error("Invalid scene structure");
+            }
         }
 
         return scene;
@@ -81,8 +92,17 @@ function parseJSONResponse(content) {
 
             const scene = JSON.parse(fixedContent);
 
-            if (!scene.name || !scene.description || !scene.choices || !Array.isArray(scene.choices)) {
-                throw new Error("Invalid scene structure");
+            if (isWizard) {
+                if (!scene.narrative || !scene.situation) {
+                    throw new Error("Invalid wizard response structure");
+                }
+                if (scene.progress === undefined || scene.progress === null) {
+                    scene.progress = 0;
+                }
+            } else {
+                if (!scene.name || !scene.description || !scene.choices || !Array.isArray(scene.choices)) {
+                    throw new Error("Invalid scene structure");
+                }
             }
 
             return scene;
@@ -92,10 +112,22 @@ function parseJSONResponse(content) {
     }
 }
 
-export async function generateNextScene(storyHistory, lastChoice, story, currentOxygen, introScene) {
-    const systemPrompt = buildSystemPrompt(story);
-    const userPrompt = buildUserPrompt(story, lastChoice, currentOxygen);
+export async function generateNextScene(storyHistory, lastChoice, story, currentValue, introScene) {
+    // Check if story has custom prompts (wizard mode)
+    const isWizard = story.id === 'wizard';
+
+    let systemPrompt, userPrompt;
+
+    if (story.systemPrompt && story.userPrompt) {
+        // Use custom prompts from story (wizard mode)
+        systemPrompt = story.systemPrompt;
+        userPrompt = story.userPrompt;
+    } else {
+        // Use default prompt builders (space mode)
+        systemPrompt = buildSystemPrompt(story);
+        userPrompt = buildUserPrompt(story, lastChoice, currentValue);
+    }
 
     const content = await callOpenAI(systemPrompt, userPrompt, 0.7, 800);
-    return parseJSONResponse(content);
+    return parseJSONResponse(content, isWizard);
 }

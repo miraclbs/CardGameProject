@@ -197,6 +197,100 @@
   font-family: 'Courier New', monospace;
 }
 
+/* Wizard Quest Progress */
+.quest-progress-container {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  max-width: 200px;
+}
+
+.quest-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(147, 112, 219, 0.5);
+  border-radius: 12px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.quest-icon {
+  font-size: 1.5rem;
+}
+
+.quest-text {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.3;
+}
+
+.quest-progress-bar {
+  position: relative;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(147, 112, 219, 0.5);
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.quest-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #9370db, #ba68c8, #e040fb);
+  transition: width 0.5s ease;
+  box-shadow: 0 0 15px rgba(147, 112, 219, 0.5);
+}
+
+.quest-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Input wrapper */
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Ending message */
+.ending-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.ending-icon {
+  font-size: 4rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
 @media screen and (max-height: 500px) and (orientation: landscape) {
   .app {
     min-height: 100dvh;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Cursor from "./Cursor";
 import SettingsButton from "./SettingsButton";
 import ChoiceCard from "./ChoiceCard";
+import FreeInputCard from "./FreeInputCard";
 import StoryModal from "./StoryModal";
 import NarrativeScreen from "./NarrativeScreen";
 import "../styles/StoryButton.css";
@@ -12,9 +13,14 @@ export default function GameScreen({
     selectedStory,
     onSettingsClick,
     onChoiceSelect,
+    onActionSubmit,
     currentOxygen,
+    currentProgress,
+    maxProgress,
+    currentQuest,
     introScene,
     showChoices = true,
+    showInput = false,
     showNarrative = false,
     currentNarrative = "",
     onNarrativeComplete,
@@ -30,6 +36,9 @@ export default function GameScreen({
         }
         : {};
 
+    const isWizard = selectedStory?.id === 'wizard';
+    const isSpace = selectedStory?.id === 'space';
+
     return (
         <>
             <Cursor />
@@ -44,7 +53,9 @@ export default function GameScreen({
                     </button>
                 </div>
                 <SettingsButton onSettingsClick={onSettingsClick} />
-                {selectedStory?.id === 'space' && currentOxygen !== null && (
+
+                {/* Space: Oxygen Tank */}
+                {isSpace && currentOxygen !== null && (
                     <div className="oxygen-tank-container">
                         <div className="oxygen-tank">
                             <div
@@ -58,24 +69,62 @@ export default function GameScreen({
                     </div>
                 )}
 
+                {/* Wizard: Quest Progress Bar */}
+                {isWizard && currentProgress !== undefined && maxProgress && (
+                    <div className="quest-progress-container">
+                        <div className="quest-info">
+                            <span className="quest-icon">⚔️</span>
+                            <span className="quest-text">{currentQuest}</span>
+                        </div>
+                        <div className="quest-progress-bar">
+                            <div
+                                className="quest-progress-fill"
+                                style={{ width: `${(currentProgress / maxProgress) * 100}%` }}
+                            />
+                            <span className="quest-progress-text">{currentProgress}/{maxProgress}</span>
+                        </div>
+                    </div>
+                )}
+
                 <div className={`story-info ${isLoading ? 'hidden' : ''}`}>
                     <h1>{scene.name}</h1>
                     <p className="description">{scene.description}</p>
                     {scene.narrative && <p className="narrative">{scene.narrative}</p>}
                 </div>
 
-                <div className={`card-wrapper ${showChoices ? 'show' : 'hide-cards'}`}>
-                    {showChoices && scene.choices && scene.choices.map((choice, index) => (
-                        <ChoiceCard
-                            key={index}
-                            text={choice.text}
-                            impact={choice.impact}
-                            onSelect={() => onChoiceSelect(choice.text)}
+                {/* Space: Choice Cards */}
+                {isSpace && (
+                    <div className={`card-wrapper ${showChoices ? 'show' : 'hide-cards'}`}>
+                        {showChoices && scene.choices && scene.choices.map((choice, index) => (
+                            <ChoiceCard
+                                key={index}
+                                text={choice.text}
+                                impact={choice.impact}
+                                onSelect={() => onChoiceSelect(choice.text)}
+                                isLoading={isLoading}
+                                cardImage={selectedStory?.img}
+                            />
+                        ))}
+                    </div>
+                )}
+
+                {/* Wizard: Free Input Card */}
+                {isWizard && showInput && !scene.isEnding && (
+                    <div className="input-wrapper">
+                        <FreeInputCard
+                            onSubmit={onActionSubmit}
                             isLoading={isLoading}
-                            cardImage={selectedStory?.img}
+                            hint={scene.hint}
                         />
-                    ))}
-                </div>
+                    </div>
+                )}
+
+                {/* Wizard: Ending Screen */}
+                {isWizard && scene.isEnding && (
+                    <div className="ending-message">
+                        <span className="ending-icon">{scene.victory ? '🏆' : '💀'}</span>
+                    </div>
+                )}
             </div>
             <StoryModal
                 isOpen={isStoryModalOpen}

@@ -11,6 +11,7 @@ import StoryIntro from "./components/StoryIntro";
 import BlinkTransition from "./components/BlinkTransition";
 import Login from "./components/Login";
 import { useSpaceStory } from "./hooks/useSpaceStory";
+import { useWizardStory } from "./hooks/useWizardStory";
 import { useScreenTransition } from "./hooks/useScreenTransition";
 import { useBlinkTransition } from "./hooks/useBlinkTransition";
 import { useAuth } from "./hooks/useAuth";
@@ -26,7 +27,12 @@ export default function App() {
     },
     onSecondMidpoint: showGameScreen
   });
+
   const spaceStory = useSpaceStory(screenState.selectedStory);
+  const wizardStory = useWizardStory(screenState.selectedStory);
+
+  // Select the appropriate story hook based on selected story type
+  const activeStory = screenState.selectedStory?.id === 'wizard' ? wizardStory : spaceStory;
 
   const handleStorySelect = (story) => {
     selectStory(story);
@@ -34,7 +40,7 @@ export default function App() {
   };
 
   const handleRestart = () => {
-    spaceStory.resetStory();
+    activeStory.resetStory();
     reset();
   };
 
@@ -45,10 +51,10 @@ export default function App() {
   }, [screenState.selectedStory]);
 
   useEffect(() => {
-    if (screenState.selectedStory && !spaceStory.currentScene && !spaceStory.isLoading) {
-      spaceStory.startNewStory();
+    if (screenState.selectedStory && !activeStory.currentScene && !activeStory.isLoading) {
+      activeStory.startNewStory();
     }
-  }, [screenState.selectedStory, spaceStory.currentScene, spaceStory.isLoading, spaceStory]);
+  }, [screenState.selectedStory, activeStory.currentScene, activeStory.isLoading, activeStory]);
 
   if (authLoading) {
     return (
@@ -67,15 +73,18 @@ export default function App() {
     );
   }
 
-  if (screenState.selectedStory && (spaceStory.isLoading && !spaceStory.currentScene)) {
+  if (screenState.selectedStory && (activeStory.isLoading && !activeStory.currentScene)) {
     return <LoadingScreen />;
   }
 
-  if (spaceStory.error) {
-    return <ErrorScreen error={spaceStory.error} onRetry={reset} />;
+  if (activeStory.error) {
+    return <ErrorScreen error={activeStory.error} onRetry={reset} />;
   }
 
-  if (screenState.selectedStory && spaceStory.currentOxygen === 0) {
+  // Game over check for space (oxygen=0)
+  const isSpaceGameOver = screenState.selectedStory?.id === 'space' && activeStory.currentOxygen === 0;
+
+  if (screenState.selectedStory && isSpaceGameOver) {
     return <GameOver onRestart={handleRestart} />;
   }
 
@@ -89,29 +98,34 @@ export default function App() {
       <div style={{ display: screenState.showSelector ? 'block' : 'none' }}>
         <StorySelector onSelectStory={handleStorySelect} />
       </div>
-      {screenState.selectedStory && spaceStory.currentScene && (
+      {screenState.selectedStory && activeStory.currentScene && (
         <div style={{ display: screenState.showIntro ? 'block' : 'none' }}>
           <StoryIntro
-            scene={spaceStory.currentScene}
+            scene={activeStory.currentScene}
             selectedStory={screenState.selectedStory}
           />
         </div>
       )}
-      {screenState.selectedStory && spaceStory.currentScene && (
+      {screenState.selectedStory && activeStory.currentScene && (
         <div style={{ display: screenState.showGame ? 'block' : 'none' }}>
           <GameScreen
-            scene={spaceStory.currentScene}
-            isLoading={spaceStory.isLoading}
+            scene={activeStory.currentScene}
+            isLoading={activeStory.isLoading}
             selectedStory={screenState.selectedStory}
             onSettingsClick={() => setIsSettingsOpen(true)}
-            onChoiceSelect={spaceStory.makeChoice}
-            currentOxygen={spaceStory.currentOxygen}
-            introScene={spaceStory.introScene}
-            showChoices={spaceStory.showChoices}
-            showNarrative={spaceStory.showNarrative}
-            currentNarrative={spaceStory.currentNarrative}
-            onNarrativeComplete={spaceStory.completeNarrative}
-            storyHistory={spaceStory.storyHistory}
+            onChoiceSelect={activeStory.makeChoice}
+            onActionSubmit={activeStory.submitAction}
+            currentOxygen={activeStory.currentOxygen}
+            currentProgress={activeStory.currentProgress}
+            maxProgress={activeStory.maxProgress}
+            currentQuest={activeStory.currentQuest}
+            introScene={activeStory.introScene}
+            showChoices={activeStory.showChoices}
+            showInput={activeStory.showInput}
+            showNarrative={activeStory.showNarrative}
+            currentNarrative={activeStory.currentNarrative}
+            onNarrativeComplete={activeStory.completeNarrative}
+            storyHistory={activeStory.storyHistory}
           />
         </div>
       )}
