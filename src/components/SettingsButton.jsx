@@ -8,6 +8,11 @@ export default function SettingsButton({ onSettingsClick }) {
     }
 
     return (
-        <button className="settings-button" onClick={settingsClick}></button>
+        <img
+            src="/img/settings-btn.png"
+            alt="Ayarlar"
+            className="settings-icon"
+            onClick={settingsClick}
+        />
     );
 }

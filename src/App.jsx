@@ -31,6 +31,17 @@ export default function App() {
   const spaceStory = useSpaceStory(screenState.selectedStory);
   const wizardStory = useWizardStory(screenState.selectedStory);
 
+  useEffect(() => {
+    const requestFullscreen = () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => { });
+      }
+      document.removeEventListener('click', requestFullscreen);
+    };
+    document.addEventListener('click', requestFullscreen);
+    return () => document.removeEventListener('click', requestFullscreen);
+  }, []);
+
   // Select the appropriate story hook based on selected story type
   const activeStory = screenState.selectedStory?.id === 'wizard' ? wizardStory : spaceStory;
 
@@ -42,6 +53,17 @@ export default function App() {
   const handleRestart = () => {
     activeStory.resetStory();
     reset();
+  };
+
+  const handleBackToMenu = () => {
+    activeStory.resetStory();
+    reset();
+  };
+
+  const handleLogout = () => {
+    activeStory.resetStory();
+    reset();
+    logout();
   };
 
   useEffect(() => {
@@ -85,7 +107,7 @@ export default function App() {
   const isSpaceGameOver = screenState.selectedStory?.id === 'space' && activeStory.currentOxygen === 0;
 
   if (screenState.selectedStory && isSpaceGameOver) {
-    return <GameOver onRestart={handleRestart} />;
+    return <GameOver onRestart={handleRestart} onBackToMenu={handleBackToMenu} />;
   }
 
   return (
@@ -96,7 +118,7 @@ export default function App() {
         <p>Oyunu oynamak için lütfen telefonunuzu yatay konuma çevirin</p>
       </div>
       <div style={{ display: screenState.showSelector ? 'block' : 'none' }}>
-        <StorySelector onSelectStory={handleStorySelect} />
+        <StorySelector onSelectStory={handleStorySelect} user={user} onLogout={handleLogout} />
       </div>
       {screenState.selectedStory && activeStory.currentScene && (
         <div style={{ display: screenState.showIntro ? 'block' : 'none' }}>
@@ -115,6 +137,7 @@ export default function App() {
             onSettingsClick={() => setIsSettingsOpen(true)}
             onChoiceSelect={activeStory.makeChoice}
             onActionSubmit={activeStory.submitAction}
+            onBackToMenu={handleBackToMenu}
             currentOxygen={activeStory.currentOxygen}
             currentProgress={activeStory.currentProgress}
             maxProgress={activeStory.maxProgress}
@@ -133,7 +156,7 @@ export default function App() {
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         user={user}
-        onLogout={logout}
+        onLogout={handleLogout}
       />
       {blinkState.showFirstBlink && (
         <BlinkTransition

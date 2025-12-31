@@ -6,7 +6,7 @@ import SettingsButton from "./SettingsButton";
 import SettingsModal from "./SettingsModal";
 import audio from "../utils/audioManager";
 
-export default function StorySelector({ onSelectStory }) {
+export default function StorySelector({ onSelectStory, user, onLogout }) {
     const [stories, setStories] = useState([]);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -27,7 +27,12 @@ export default function StorySelector({ onSelectStory }) {
     return (
         <div className="story-selector-container">
             <SettingsButton onSettingsClick={() => setIsSettingsOpen(true)} />
-            <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+            <SettingsModal
+                isOpen={isSettingsOpen}
+                onClose={() => setIsSettingsOpen(false)}
+                user={user}
+                onLogout={onLogout}
+            />
             <div className="story-selector-content">
                 <h1 className="story-selector-title">Bir Macera Seç</h1>
                 <p className="story-selector-subtitle">

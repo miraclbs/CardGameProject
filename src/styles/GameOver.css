@@ -21,17 +21,18 @@
     color: #ffffff;
 }
 
-.restart-text {
-    font-size: 3rem;
-    font-family: inherit;
-    color: #ffffff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
+.game-over-buttons {
+    display: flex;
+    gap: 2rem;
 }
 
-.restart-text:hover {
+.game-over-icon {
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
 
-    text-shadow: 0 0 20px rgb(255, 255, 255);
-    transform: scale(1.1);
+.game-over-icon:hover {
+    transform: scale(1.15);
 }

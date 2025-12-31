@@ -7,30 +7,15 @@
     z-index: 60;
 }
 
-.story-button {
-    width: 64px;
-    height: 64px;
-    border-radius: 999px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.5);
-    font-size: 1.8rem;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(6px);
+.menu-icon {
+    width: 48px;
+    height: 48px;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.15s ease, background-color 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: transform 0.3s ease;
 }
 
-.story-button:hover {
-    transform: scale(1.1);
-    background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 0 20px rgba(74, 205, 222, 0.4);
-}
-
-.story-button:active {
-    transform: scale(0.95);
+.menu-icon:hover {
+    transform: scale(1.15);
 }
 
 @media screen and (max-height: 500px) and (orientation: landscape) {
@@ -40,10 +25,9 @@
         gap: 8px;
     }
 
-    .story-button {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
+    .menu-icon {
+        width: 36px;
+        height: 36px;
     }
 }
 
@@ -54,9 +38,8 @@
         gap: 6px;
     }
 
-    .story-button {
-        width: 32px;
-        height: 32px;
-        font-size: 1rem;
+    .menu-icon {
+        width: 28px;
+        height: 28px;
     }
 }

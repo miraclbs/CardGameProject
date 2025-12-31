@@ -13,6 +13,7 @@ class AudioManager {
 
         this.storyMusic = {
             "space": "/sounds/space-bg-song.wav",
+            "wizard": "/sounds/magic-bg-song.mp3",
         };
 
         this.loadSounds();

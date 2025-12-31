@@ -14,6 +14,7 @@ export default function GameScreen({
     onSettingsClick,
     onChoiceSelect,
     onActionSubmit,
+    onBackToMenu,
     currentOxygen,
     currentProgress,
     maxProgress,
@@ -44,13 +45,20 @@ export default function GameScreen({
             <Cursor />
             <div className="app" style={appStyle}>
                 <div className="top-left-buttons">
-                    <button
-                        className="story-button"
+                    <img
+                        src="/img/home.png"
+                        alt="Ana Menü"
+                        className="menu-icon"
+                        onClick={onBackToMenu}
+                        title="Ana Menüye Dön"
+                    />
+                    <img
+                        src="/img/story.png"
+                        alt="Hikaye Özeti"
+                        className="menu-icon"
                         onClick={() => setIsStoryModalOpen(true)}
                         title="Hikaye Özeti"
-                    >
-                        📖
-                    </button>
+                    />
                 </div>
                 <SettingsButton onSettingsClick={onSettingsClick} />
 
