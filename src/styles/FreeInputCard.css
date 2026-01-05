@@ -24,6 +24,7 @@
 .input-prompt {
     width: 100%;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .prompt-text {
@@ -45,6 +46,18 @@
     transition: all 0.3s ease;
     font-family: inherit;
     text-align: center;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    min-height: 40px;
+    max-height: 200px;
+}
+
+/* Chrome, Safari, Opera için scrollbar gizleme */
+.action-input::-webkit-scrollbar {
+    display: none;
 }
 
 .action-input::placeholder {

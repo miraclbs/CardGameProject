@@ -3,30 +3,31 @@ import '../styles/NarrativeScreen.css';
 
 export default function NarrativeScreen({ narrative, onComplete, isLoading }) {
     const [fadeIn, setFadeIn] = useState(false);
-    const [minTimeElapsed, setMinTimeElapsed] = useState(false);
 
     useEffect(() => {
         setTimeout(() => setFadeIn(true), 100);
-        const readingTime = Math.max(3000, narrative.length * 50);
-        const timer = setTimeout(() => {
-            setMinTimeElapsed(true);
-        }, readingTime);
-
-        return () => clearTimeout(timer);
     }, [narrative]);
 
     useEffect(() => {
-        if (minTimeElapsed && !isLoading) {
-            onComplete();
+        const handleKeyPress = (e) => {
+            if ((e.key === ' ' || e.key === 'Enter') && !isLoading) {
+                e.preventDefault();
+                onComplete();
+            }
+        };
+
+        if (!isLoading) {
+            window.addEventListener('keydown', handleKeyPress);
+            return () => window.removeEventListener('keydown', handleKeyPress);
         }
-    }, [minTimeElapsed, isLoading, onComplete]);
+    }, [isLoading, onComplete]);
 
     return (
         <div className={`narrative-overlay ${fadeIn ? 'fade-in' : ''}`}>
             <div className="narrative-content">
                 <p className="narrative-text">{narrative}</p>
                 <div className="narrative-loader">
-                    <span>{isLoading ? 'Yeni seçimler hazırlanıyor' : 'Hazır...'}</span>
+                    <span>{isLoading ? 'Yeni seçimler hazırlanıyor' : 'Devam etmek için SPACE veya ENTER tuşuna basın'}</span>
                     {isLoading && (
                         <div className="loader-dots">
                             <span>.</span>
@@ -36,6 +37,5 @@ export default function NarrativeScreen({ narrative, onComplete, isLoading }) {
                     )}
                 </div>
             </div>
-        </div>
-    );
+        </div>);
 }

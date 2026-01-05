@@ -25,6 +25,7 @@ export function useWizardStory(story) {
     const [currentNarrative, setCurrentNarrative] = useState("");
     const [showNarrative, setShowNarrative] = useState(false);
     const [currentQuest] = useState(WIZARD_INTRO_SCENE.quest);
+    const [nextSceneData, setNextSceneData] = useState(null);
 
     const submitAction = async (playerAction) => {
         if (!playerAction || playerAction.trim() === "") {
@@ -50,7 +51,7 @@ export function useWizardStory(story) {
             );
 
             if (!validateWizardResponse(response)) {
-                throw new Error("AI yanıtı geçersiz format içeriyor");
+                throw new Error("Bir beklenmeyen hata oluştu. Lütfen tekrar deneyin.");
             }
 
             const newProgress = calculateProgress(currentProgress, response.progress);
@@ -60,38 +61,32 @@ export function useWizardStory(story) {
 
             if (isVictory(newProgress, maxProgress)) {
                 const historyEntry = createWizardHistoryEntry(
-                    playerAction, response.narrative, progressBefore, maxProgress
+                    playerAction, "", progressBefore, maxProgress
                 );
                 setStoryHistory([...storyHistory, historyEntry]);
                 setCurrentProgress(maxProgress);
 
-                setTimeout(() => {
-                    setShowNarrative(false);
-                    setCurrentScene(WIZARD_VICTORY_SCENE);
-                    setShowInput(false);
-                    setIsLoading(false);
-                }, 4000);
+                // Store victory scene for manual transition
+                setNextSceneData(WIZARD_VICTORY_SCENE);
+                setIsLoading(false);
                 return;
             }
 
             if (isDefeat(newProgress)) {
                 const historyEntry = createWizardHistoryEntry(
-                    playerAction, response.narrative, progressBefore, 0
+                    playerAction, "", progressBefore, 0
                 );
                 setStoryHistory([...storyHistory, historyEntry]);
                 setCurrentProgress(0);
 
-                setTimeout(() => {
-                    setShowNarrative(false);
-                    setCurrentScene(WIZARD_DEFEAT_SCENE);
-                    setShowInput(false);
-                    setIsLoading(false);
-                }, 4000);
+                // Store defeat scene for manual transition
+                setNextSceneData(WIZARD_DEFEAT_SCENE);
+                setIsLoading(false);
                 return;
             }
 
             const historyEntry = createWizardHistoryEntry(
-                playerAction, response.narrative, progressBefore, newProgress
+                playerAction, "", progressBefore, newProgress
             );
             setStoryHistory([...storyHistory, historyEntry]);
             setCurrentProgress(newProgress);
@@ -104,12 +99,9 @@ export function useWizardStory(story) {
                 hint: response.hint || null
             };
 
-            setTimeout(() => {
-                setShowNarrative(false);
-                setCurrentScene(newScene);
-                setShowInput(true);
-                setIsLoading(false);
-            }, 3000);
+            // Store scene for manual transition
+            setNextSceneData(newScene);
+            setIsLoading(false);
 
         } catch (err) {
             setError(err.message);
@@ -121,9 +113,23 @@ export function useWizardStory(story) {
 
     const completeNarrative = useCallback(() => {
         setShowNarrative(false);
-        setShowInput(true);
+
+        if (nextSceneData) {
+            setCurrentScene(nextSceneData);
+            setNextSceneData(null);
+
+            // If it's a victory or defeat scene, don't show input
+            if (nextSceneData.isEnding) {
+                setShowInput(false);
+            } else {
+                setShowInput(true);
+            }
+        } else {
+            setShowInput(true);
+        }
+
         setIsLoading(false);
-    }, []);
+    }, [nextSceneData]);
 
     const startNewStory = async () => {
         setIsLoading(true);
@@ -151,6 +157,7 @@ export function useWizardStory(story) {
         setShowInput(true);
         setShowNarrative(false);
         setCurrentNarrative("");
+        setNextSceneData(null);
         setIsLoading(false);
         setError(null);
     };

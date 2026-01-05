@@ -8,6 +8,10 @@ export function useBlinkTransition({ onFirstMidpoint, onFirstComplete, onSecondM
         setShowFirstBlink(true);
     };
 
+    const startSecondBlink = () => {
+        setShowSecondBlink(true);
+    };
+
     const handleFirstMidpoint = () => {
         if (onFirstMidpoint) onFirstMidpoint();
     };
@@ -15,10 +19,6 @@ export function useBlinkTransition({ onFirstMidpoint, onFirstComplete, onSecondM
     const handleFirstComplete = () => {
         setShowFirstBlink(false);
         if (onFirstComplete) onFirstComplete();
-
-        setTimeout(() => {
-            setShowSecondBlink(true);
-        }, 3000);
     };
 
     const handleSecondMidpoint = () => {
@@ -37,6 +37,7 @@ export function useBlinkTransition({ onFirstMidpoint, onFirstComplete, onSecondM
         },
         handlers: {
             startFirstBlink,
+            startSecondBlink,
             onFirstMidpoint: handleFirstMidpoint,
             onFirstComplete: handleFirstComplete,
             onSecondMidpoint: handleSecondMidpoint,

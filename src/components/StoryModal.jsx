@@ -38,6 +38,9 @@ export default function StoryModal({ isOpen, onClose, introScene, storyHistory =
 
                     {storyHistory.map((entry, index) => {
                         const oxygenChange = entry.oxygenAfter - entry.oxygenBefore;
+                        const hasOxygen = entry.oxygenBefore !== undefined && entry.oxygenBefore !== null &&
+                            entry.oxygenAfter !== undefined && entry.oxygenAfter !== null;
+
                         return (
                             <div key={index} className="timeline-item">
                                 <div className="timeline-marker">{index + 1}</div>
@@ -49,12 +52,14 @@ export default function StoryModal({ isOpen, onClose, introScene, storyHistory =
                                     {entry.result && (
                                         <p className="result-text">{entry.result}</p>
                                     )}
-                                    <div className="oxygen-change">
-                                        <span className={`oxygen-badge ${oxygenChange > 0 ? 'positive' : oxygenChange < 0 ? 'negative' : 'neutral'}`}>
-                                            O₂: {oxygenChange > 0 ? '+' : ''}{oxygenChange}%
-                                        </span>
-                                        <span className="oxygen-total">({entry.oxygenAfter}%)</span>
-                                    </div>
+                                    {hasOxygen && (
+                                        <div className="oxygen-change">
+                                            <span className={`oxygen-badge ${oxygenChange > 0 ? 'positive' : oxygenChange < 0 ? 'negative' : 'neutral'}`}>
+                                                O₂: {oxygenChange > 0 ? '+' : ''}{oxygenChange}%
+                                            </span>
+                                            <span className="oxygen-total">({entry.oxygenAfter}%)</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         );

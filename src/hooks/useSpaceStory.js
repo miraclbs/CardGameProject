@@ -33,7 +33,7 @@ export function useSpaceStory(story) {
 
             const selectedChoice = currentScene.choices.find(c => c.text === choiceText);
             if (!selectedChoice) {
-                throw new Error("Secim bulunamadi");
+                throw new Error("Bir beklenmeyen hata oluştu. Lütfen tekrar deneyin.");
             }
 
             const oxygenChange = selectedChoice.oxygenChange || 0;
@@ -69,7 +69,7 @@ export function useSpaceStory(story) {
             );
 
             if (!validateSpaceScene(nextScene)) {
-                throw new Error("AI yaniti eksik alanlar iceriyor");
+                throw new Error("Bir beklenmeyen hata oluştu. Lütfen tekrar deneyin.");
             }
 
             setNextSceneData({ scene: nextScene, oxygen: newOxygen });

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCardTilt } from "../hooks/useCardTilt";
+import audio from "../utils/audioManager";
 import "../styles/FreeInputCard.css";
 
 export default function FreeInputCard({ onSubmit, isLoading, hint }) {
@@ -8,6 +9,7 @@ export default function FreeInputCard({ onSubmit, isLoading, hint }) {
 
     const handleSubmit = () => {
         if (inputText.trim() && !isLoading) {
+            audio.play("card");
             onSubmit(inputText.trim());
             setInputText("");
         }

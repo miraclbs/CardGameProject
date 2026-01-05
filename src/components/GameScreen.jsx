@@ -97,7 +97,6 @@ export default function GameScreen({
                 <div className={`story-info ${isLoading ? 'hidden' : ''}`}>
                     <h1>{scene.name}</h1>
                     <p className="description">{scene.description}</p>
-                    {scene.narrative && <p className="narrative">{scene.narrative}</p>}
                 </div>
 
                 {/* Space: Choice Cards */}

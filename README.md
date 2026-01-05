@@ -49,7 +49,7 @@ Open your browser and go to `http://localhost:5173`.
 
 https://www.youtube.com/@ProgrammerCloud/shorts
 https://www.youtube.com/shorts/Sd-GyReNr3U 
-https://app.klingai.com/
+
 
 ----------------------------------------------------
 

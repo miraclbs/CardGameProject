@@ -25,7 +25,9 @@ export default function App() {
     onFirstMidpoint: () => {
       showIntro();
     },
-    onSecondMidpoint: showGameScreen
+    onSecondMidpoint: () => {
+      showGameScreen();
+    }
   });
 
   const spaceStory = useSpaceStory(screenState.selectedStory);
@@ -42,7 +44,7 @@ export default function App() {
     return () => document.removeEventListener('click', requestFullscreen);
   }, []);
 
-  // Select the appropriate story hook based on selected story type
+
   const activeStory = screenState.selectedStory?.id === 'wizard' ? wizardStory : spaceStory;
 
   const handleStorySelect = (story) => {
@@ -103,7 +105,6 @@ export default function App() {
     return <ErrorScreen error={activeStory.error} onRetry={reset} />;
   }
 
-  // Game over check for space (oxygen=0)
   const isSpaceGameOver = screenState.selectedStory?.id === 'space' && activeStory.currentOxygen === 0;
 
   if (screenState.selectedStory && isSpaceGameOver) {
@@ -117,40 +118,37 @@ export default function App() {
         <div className="rotate-icon">📱</div>
         <p>Oyunu oynamak için lütfen telefonunuzu yatay konuma çevirin</p>
       </div>
-      <div style={{ display: screenState.showSelector ? 'block' : 'none' }}>
+      {screenState.showSelector && (
         <StorySelector onSelectStory={handleStorySelect} user={user} onLogout={handleLogout} />
-      </div>
-      {screenState.selectedStory && activeStory.currentScene && (
-        <div style={{ display: screenState.showIntro ? 'block' : 'none' }}>
-          <StoryIntro
-            scene={activeStory.currentScene}
-            selectedStory={screenState.selectedStory}
-          />
-        </div>
       )}
-      {screenState.selectedStory && activeStory.currentScene && (
-        <div style={{ display: screenState.showGame ? 'block' : 'none' }}>
-          <GameScreen
-            scene={activeStory.currentScene}
-            isLoading={activeStory.isLoading}
-            selectedStory={screenState.selectedStory}
-            onSettingsClick={() => setIsSettingsOpen(true)}
-            onChoiceSelect={activeStory.makeChoice}
-            onActionSubmit={activeStory.submitAction}
-            onBackToMenu={handleBackToMenu}
-            currentOxygen={activeStory.currentOxygen}
-            currentProgress={activeStory.currentProgress}
-            maxProgress={activeStory.maxProgress}
-            currentQuest={activeStory.currentQuest}
-            introScene={activeStory.introScene}
-            showChoices={activeStory.showChoices}
-            showInput={activeStory.showInput}
-            showNarrative={activeStory.showNarrative}
-            currentNarrative={activeStory.currentNarrative}
-            onNarrativeComplete={activeStory.completeNarrative}
-            storyHistory={activeStory.storyHistory}
-          />
-        </div>
+      {screenState.selectedStory && activeStory.currentScene && screenState.showIntro && (
+        <StoryIntro
+          scene={activeStory.currentScene}
+          selectedStory={screenState.selectedStory}
+          onContinue={handlers.startSecondBlink}
+        />
+      )}
+      {screenState.selectedStory && activeStory.currentScene && screenState.showGame && (
+        <GameScreen
+          scene={activeStory.currentScene}
+          isLoading={activeStory.isLoading}
+          selectedStory={screenState.selectedStory}
+          onSettingsClick={() => setIsSettingsOpen(true)}
+          onChoiceSelect={activeStory.makeChoice}
+          onActionSubmit={activeStory.submitAction}
+          onBackToMenu={handleBackToMenu}
+          currentOxygen={activeStory.currentOxygen}
+          currentProgress={activeStory.currentProgress}
+          maxProgress={activeStory.maxProgress}
+          currentQuest={activeStory.currentQuest}
+          introScene={activeStory.introScene}
+          showChoices={activeStory.showChoices}
+          showInput={activeStory.showInput}
+          showNarrative={activeStory.showNarrative}
+          currentNarrative={activeStory.currentNarrative}
+          onNarrativeComplete={activeStory.completeNarrative}
+          storyHistory={activeStory.storyHistory}
+        />
       )}
       <SettingsModal
         isOpen={isSettingsOpen}

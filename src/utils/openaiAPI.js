@@ -23,8 +23,7 @@ async function callOpenAI(systemPrompt, userPrompt, temperature = 0.7, maxTokens
         });
 
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error("API Hatası: " + (errorData.error?.message || response.statusText));
+            throw new Error("Sunucuya bağlanırken bir sorun oluştu. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.");
         }
 
         const data = await response.json();
@@ -50,7 +49,7 @@ function parseJSONResponse(content, isWizard = false) {
         // Different validation for wizard vs space
         if (isWizard) {
             if (!scene.narrative || !scene.situation) {
-                throw new Error("Invalid wizard response structure");
+                throw new Error("Oyun yükleme sırasında beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.");
             }
             // Ensure progress is a number
             if (scene.progress === undefined || scene.progress === null) {
@@ -58,7 +57,7 @@ function parseJSONResponse(content, isWizard = false) {
             }
         } else {
             if (!scene.name || !scene.description || !scene.choices || !Array.isArray(scene.choices)) {
-                throw new Error("Invalid scene structure");
+                throw new Error("Oyun yükleme sırasında beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.");
             }
         }
 
@@ -94,20 +93,20 @@ function parseJSONResponse(content, isWizard = false) {
 
             if (isWizard) {
                 if (!scene.narrative || !scene.situation) {
-                    throw new Error("Invalid wizard response structure");
+                    throw new Error("Oyun yükleme sırasında beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.");
                 }
                 if (scene.progress === undefined || scene.progress === null) {
                     scene.progress = 0;
                 }
             } else {
                 if (!scene.name || !scene.description || !scene.choices || !Array.isArray(scene.choices)) {
-                    throw new Error("Invalid scene structure");
+                    throw new Error("Oyun yükleme sırasında beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.");
                 }
             }
 
             return scene;
         } catch (secondError) {
-            throw new Error("AI yanıtı geçersiz JSON formatında. Lütfen tekrar deneyin.");
+            throw new Error("Bir beklenmeyen hata oluştu. Lütfen tekrar deneyin.");
         }
     }
 }
