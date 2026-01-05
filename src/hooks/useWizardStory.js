@@ -66,7 +66,7 @@ export function useWizardStory(story) {
                 setStoryHistory([...storyHistory, historyEntry]);
                 setCurrentProgress(maxProgress);
 
-                // Store victory scene for manual transition
+
                 setNextSceneData(WIZARD_VICTORY_SCENE);
                 setIsLoading(false);
                 return;
@@ -79,7 +79,7 @@ export function useWizardStory(story) {
                 setStoryHistory([...storyHistory, historyEntry]);
                 setCurrentProgress(0);
 
-                // Store defeat scene for manual transition
+
                 setNextSceneData(WIZARD_DEFEAT_SCENE);
                 setIsLoading(false);
                 return;
@@ -99,7 +99,7 @@ export function useWizardStory(story) {
                 hint: response.hint || null
             };
 
-            // Store scene for manual transition
+
             setNextSceneData(newScene);
             setIsLoading(false);
 
@@ -118,7 +118,7 @@ export function useWizardStory(story) {
             setCurrentScene(nextSceneData);
             setNextSceneData(null);
 
-            // If it's a victory or defeat scene, don't show input
+
             if (nextSceneData.isEnding) {
                 setShowInput(false);
             } else {
