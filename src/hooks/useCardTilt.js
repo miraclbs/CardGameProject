@@ -22,8 +22,8 @@ export function useCardTilt() {
         const rotateX = ((mouseY - centerY) / centerY) * -15;
         const rotateY = ((mouseX - centerX) / centerX) * 15;
 
-        const shadowX = ((centerX - mouseX) / centerX) * 20;
-        const shadowY = ((centerY - mouseY) / centerY) * 20;
+        const shadowX = ((centerX - mouseX) / centerX) * 10;
+        const shadowY = ((centerY - mouseY) / centerY) * 10;
 
         wrapper.style.transform = "rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)";
         wrapper.style.boxShadow = shadowX + "px " + shadowY + "px 20px rgba(92, 99, 156, 0.3)";

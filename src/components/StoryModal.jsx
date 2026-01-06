@@ -41,13 +41,17 @@ export default function StoryModal({ isOpen, onClose, introScene, storyHistory =
                         const hasOxygen = entry.oxygenBefore !== undefined && entry.oxygenBefore !== null &&
                             entry.oxygenAfter !== undefined && entry.oxygenAfter !== null;
 
+                        const progressChange = entry.progressAfter - entry.progressBefore;
+                        const hasProgress = entry.progressBefore !== undefined && entry.progressBefore !== null &&
+                            entry.progressAfter !== undefined && entry.progressAfter !== null;
+
                         return (
                             <div key={index} className="timeline-item">
                                 <div className="timeline-marker">{index + 1}</div>
                                 <div className="timeline-content">
                                     <div className="choice-made">
-                                        <span className="choice-label">Seçim:</span>
-                                        <span className="choice-text">{entry.choice}</span>
+                                        <span className="choice-label">{hasProgress ? 'Aksiyon:' : 'Seçim:'}</span>
+                                        <span className="choice-text">{entry.choice || entry.action}</span>
                                     </div>
                                     {entry.result && (
                                         <p className="result-text">{entry.result}</p>
@@ -58,6 +62,14 @@ export default function StoryModal({ isOpen, onClose, introScene, storyHistory =
                                                 O₂: {oxygenChange > 0 ? '+' : ''}{oxygenChange}%
                                             </span>
                                             <span className="oxygen-total">({entry.oxygenAfter}%)</span>
+                                        </div>
+                                    )}
+                                    {hasProgress && (
+                                        <div className="oxygen-change">
+                                            <span className={`oxygen-badge ${progressChange > 0 ? 'positive' : progressChange < 0 ? 'negative' : 'neutral'}`}>
+                                                ⚔️: {progressChange > 0 ? '+' : ''}{progressChange}
+                                            </span>
+                                            <span className="oxygen-total">({entry.progressAfter})</span>
                                         </div>
                                     )}
                                 </div>

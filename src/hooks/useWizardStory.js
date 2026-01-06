@@ -96,7 +96,8 @@ export function useWizardStory(story) {
                 name: currentScene.name,
                 description: response.situation,
                 narrative: response.narrative,
-                hint: response.hint || null
+                hint: response.hint || null,
+                progress: newProgress // İlerlemeyi sahneye ekle
             };
 
 
@@ -116,6 +117,12 @@ export function useWizardStory(story) {
 
         if (nextSceneData) {
             setCurrentScene(nextSceneData);
+
+            // İlerlemeyi güncelle
+            if (nextSceneData.progress !== undefined) {
+                setCurrentProgress(nextSceneData.progress);
+            }
+
             setNextSceneData(null);
 
 

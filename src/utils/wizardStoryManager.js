@@ -19,13 +19,20 @@ KURALLAR:
 5. Bazen esprili, bazen ciddi anlar olsun
 6. TÜRKÇE yaz
 
-İLERLEME SİSTEMİ:
+İLERLEME SİSTEMİ (ÖNEMLİ!):
 - Mevcut ilerleme: ${currentProgress}/${maxProgress}
-- "progress" değeri döndür: -1 (kötü hamle), 0 (nötr), +1 (iyi), +2 (harika)
+- MUTLAKA "progress" değeri döndür: -1 (kötü hamle), 0 (nötr), +1 (iyi), +2 (harika)
 - ${maxProgress - currentProgress} puan daha kazanırsa oyuncu FİNALE ulaşır
 - İlerleme 0'ın altına düşerse oyuncu KAYBEDİYOR
+- İyi aksiyonlar için +1 veya +2, kötü aksiyonlar için -1, nötr aksiyonlar için 0 ver
 
-JSON FORMATI (SADECE JSON DÖNDÜR):
+ÖRNEKLERİnden:
+- "Büyülü asa kullanıyorum" → progress: 2 (çok iyi)
+- "Dikkatli ilerliyorum" → progress: 1 (iyi)
+- "Gürültü yapıyorum" → progress: 0 (nötr)
+- "Planı yok sayıyorum" → progress: -1 (kötü)
+
+JSON FORMATI (SADECE BU FORMATTA DÖNDÜR, MUTLAKA "progress" ALANINI EKLE):
 {
     "narrative": "Hikayenin devamı ve oyuncunun aksiyonunun sonucu (2-3 cümle)",
     "situation": "Şu anki durum ve meydan okuma (1-2 cümle)", 
@@ -45,7 +52,10 @@ export function buildWizardUserPrompt(playerAction, storyHistory = []) {
         prompt += `\n`;
     }
 
-    prompt += `Oyuncunun aksiyonuna göre hikayeyi ilerlet. SADECE JSON döndür.`;
+    prompt += `Oyuncunun aksiyonuna göre hikayeyi ilerlet. 
+
+ÖNEMLİ: Response'unda MUTLAKA "progress" alanını ekle (-1, 0, 1 veya 2).
+SADECE JSON döndür, başka metin yazma.`;
 
     return prompt;
 }

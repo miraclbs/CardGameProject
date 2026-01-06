@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
-    background-image: url("/public/img/default-bg.png");
+    background-image: url("/img/default-bg.png");
     background-size: cover;
     background-position: center;
 }

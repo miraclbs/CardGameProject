@@ -46,14 +46,12 @@ function parseJSONResponse(content, isWizard = false) {
     try {
         const scene = JSON.parse(content);
 
-        // Different validation for wizard vs space
         if (isWizard) {
             if (!scene.narrative || !scene.situation) {
                 throw new Error("Oyun yükleme sırasında beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.");
             }
-            // Ensure progress is a number
             if (scene.progress === undefined || scene.progress === null) {
-                scene.progress = 0;
+                scene.progress = 1;
             }
         } else {
             if (!scene.name || !scene.description || !scene.choices || !Array.isArray(scene.choices)) {
@@ -96,7 +94,7 @@ function parseJSONResponse(content, isWizard = false) {
                     throw new Error("Oyun yükleme sırasında beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.");
                 }
                 if (scene.progress === undefined || scene.progress === null) {
-                    scene.progress = 0;
+                    scene.progress = 1;
                 }
             } else {
                 if (!scene.name || !scene.description || !scene.choices || !Array.isArray(scene.choices)) {
