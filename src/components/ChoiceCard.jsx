@@ -17,7 +17,7 @@ export default function ChoiceCard({
             audio.playLockedCardSound();
             onExit();
         }
-    }, [isLoading]);
+    }, [isLoading, onExit]);
 
     const handleClick = () => {
         if (isLoading) return;

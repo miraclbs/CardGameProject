@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import '../styles/BlinkTransition.css';
 
 export default function BlinkTransition({ onComplete, onMidpoint, speed = 'normal' }) {
-    const [animating, setAnimating] = useState(false);
+    const [animating, setAnimating] = useState(true);
     const onCompleteRef = useRef(onComplete);
     const onMidpointRef = useRef(onMidpoint);
 
@@ -13,7 +13,6 @@ export default function BlinkTransition({ onComplete, onMidpoint, speed = 'norma
     }, [onComplete, onMidpoint]);
 
     useEffect(() => {
-        setAnimating(true);
         const duration = speed === 'fast' ? 800 : 1200;
         const midpoint = duration / 2;
 
@@ -34,7 +33,7 @@ export default function BlinkTransition({ onComplete, onMidpoint, speed = 'norma
             clearTimeout(midpointTimer);
             clearTimeout(timer);
         };
-    }, []);
+    }, [speed]);
 
     return createPortal(
         <div className={`blink-overlay ${animating ? 'animating' : ''} ${speed === 'fast' ? 'fast' : ''}`}>
