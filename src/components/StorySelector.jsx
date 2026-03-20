@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../styles/StorySelector.css";
 import { getAllLevels } from "../levels";
 import ChoiceCard from "./ChoiceCard";
@@ -7,13 +7,8 @@ import SettingsModal from "./SettingsModal";
 import audio from "../utils/audioManager";
 
 export default function StorySelector({ onSelectStory, user, onLogout }) {
-    const [stories, setStories] = useState([]);
+    const [stories] = useState(() => getAllLevels());
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
-    useEffect(() => {
-        const levels = getAllLevels();
-        setStories(levels);
-    }, []);
 
     const handleSelectStory = (story) => {
         if (story.locked) {

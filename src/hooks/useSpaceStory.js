@@ -64,8 +64,7 @@ export function useSpaceStory(story) {
                 storyHistory,
                 choiceText,
                 { ...story, id: 'space', systemPrompt, userPrompt },
-                newOxygen,
-                null
+                newOxygen
             );
 
             if (!validateSpaceScene(nextScene)) {
@@ -97,7 +96,7 @@ export function useSpaceStory(story) {
         }
 
         setIsLoading(false);
-    }, [nextSceneData, showNarrative]);
+    }, [nextSceneData]);
 
     const startNewStory = async () => {
         setIsLoading(true);

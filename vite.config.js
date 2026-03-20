@@ -10,13 +10,10 @@ export default defineConfig({
         target: 'https://api.openai.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/openai/, ''),
-        configure: (proxy, options) => {
-          proxy.on('proxyReq', (proxyReq, req, res) => {
-            // API key'i env'den al ve header'a ekle
-            const apiKey = process.env.VITE_OPENAI_API_KEY;
-            if (apiKey) {
-              proxyReq.setHeader('Authorization', `Bearer ${apiKey}`);
-            }
+        configure: (proxy) => {
+          proxy.on('proxyReq', () => {
+            // Note: API key should be set via environment variables
+            // The proxy will forward the Authorization header from the client
           });
         }
       }

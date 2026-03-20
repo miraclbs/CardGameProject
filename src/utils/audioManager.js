@@ -35,7 +35,8 @@ class AudioManager {
             this.sounds.card = new Audio("/sounds/card-click.wav");
             this.sounds.cardLock = new Audio("/sounds/card-click-lock.wav");
             this.sounds.settings = new Audio("/sounds/settings-click.mp3");
-        } catch (err) {
+        } catch {
+            // Ignore audio loading errors
         }
     }
 
@@ -47,7 +48,7 @@ class AudioManager {
 
         if (name === "bgm") {
             if (this.musicOn) {
-                sound.play().catch(err => { });
+                sound.play().catch(() => { });
             }
             return;
         }
@@ -55,7 +56,7 @@ class AudioManager {
         if (!this.sfxOn) return;
 
         sound.currentTime = 0;
-        sound.play().catch(err => { });
+        sound.play().catch(() => { });
     }
 
     stop(name) {
@@ -74,13 +75,14 @@ class AudioManager {
             this.sounds.bgm.loop = true;
             this.sounds.bgm.volume = 0.5;
             if (this.musicOn) this.playMusic();
-        } catch (err) {
+        } catch {
+            // Ignore audio loading errors
         }
     }
 
     playMusic() {
         if (this.sounds.bgm && this.musicOn) {
-            this.sounds.bgm.play().catch(err => { });
+            this.sounds.bgm.play().catch(() => { });
         }
     }
 

@@ -46,8 +46,7 @@ export function useWizardStory(story) {
                 storyHistory,
                 playerAction,
                 { ...story, id: 'wizard', systemPrompt, userPrompt },
-                currentProgress,
-                null
+                currentProgress
             );
 
             if (!validateWizardResponse(response)) {

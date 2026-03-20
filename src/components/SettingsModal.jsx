@@ -3,10 +3,10 @@ import "../styles/SettingsModal.css";
 import audio from "../utils/audioManager";
 
 export default function SettingsModal({ isOpen, onClose, user, onLogout }) {
-    if (!isOpen) return null;
-
     const [music, setMusic] = useState(audio.musicOn);
     const [sfx, setSfx] = useState(audio.sfxOn);
+
+    if (!isOpen) return null;
 
     const toggleMusic = (value) => {
         setMusic(value);

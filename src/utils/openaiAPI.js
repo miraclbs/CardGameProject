@@ -4,33 +4,29 @@ const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 const API_URL = "/api/openai/v1/chat/completions";
 
 async function callOpenAI(systemPrompt, userPrompt, temperature = 0.7, maxTokens = 800) {
-    try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + API_KEY,
-            },
-            body: JSON.stringify({
-                model: "gpt-4o-mini",
-                messages: [
-                    { role: "system", content: systemPrompt },
-                    { role: "user", content: userPrompt }
-                ],
-                temperature: temperature,
-                max_tokens: maxTokens,
-            }),
-        });
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + API_KEY,
+        },
+        body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: userPrompt }
+            ],
+            temperature: temperature,
+            max_tokens: maxTokens,
+        }),
+    });
 
-        if (!response.ok) {
-            throw new Error("Sunucuya bağlanırken bir sorun oluştu. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.");
-        }
-
-        const data = await response.json();
-        return data.choices[0].message.content.trim();
-    } catch (error) {
-        throw error;
+    if (!response.ok) {
+        throw new Error("Sunucuya bağlanırken bir sorun oluştu. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.");
     }
+
+    const data = await response.json();
+    return data.choices[0].message.content.trim();
 }
 
 function parseJSONResponse(content, isWizard = false) {
@@ -60,8 +56,8 @@ function parseJSONResponse(content, isWizard = false) {
         }
 
         return scene;
-    } catch (firstError) {
-
+    } catch {
+        // First parse attempt failed, try to fix JSON formatting
         try {
             let fixedContent = content;
 
@@ -103,13 +99,14 @@ function parseJSONResponse(content, isWizard = false) {
             }
 
             return scene;
-        } catch (secondError) {
+        } catch {
+            // Second parse attempt failed
             throw new Error("Bir beklenmeyen hata oluştu. Lütfen tekrar deneyin.");
         }
     }
 }
 
-export async function generateNextScene(storyHistory, lastChoice, story, currentValue, introScene) {
+export async function generateNextScene(storyHistory, lastChoice, story, currentValue) {
     // Check if story has custom prompts (wizard mode)
     const isWizard = story.id === 'wizard';
 
