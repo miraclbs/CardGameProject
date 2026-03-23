@@ -2,6 +2,11 @@ import { SPACE_CONFIG } from './space/spaceConfig';
 import { WIZARD_CONFIG } from './wizard/wizardConfig';
 
 export const LEVELS = {
+    wizard: {
+        ...WIZARD_CONFIG,
+        locked: false,
+        featured: true
+    },
     space: SPACE_CONFIG,
     detective: {
         id: 'detective',
@@ -10,10 +15,6 @@ export const LEVELS = {
         locked: true,
         img: '/img/detective-card.png',
         lockedImg: '/img/detective-card-lock.png'
-    },
-    wizard: {
-        ...WIZARD_CONFIG,
-        locked: false
     }
 };
 

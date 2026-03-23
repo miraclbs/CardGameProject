@@ -51,9 +51,33 @@
     transition: none;
 }
 
+.featured-badge {
+    text-align: center;
+    padding: 8px 16px;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), 0 4px 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), 0 4px 10px rgba(0, 0, 0, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.7), 0 4px 15px rgba(0, 0, 0, 0.3); }
+}
+
 @media (max-width: 600px) {
     .story-card-wrapper {
         max-width: 240px;
+    }
+
+    .featured-badge {
+        font-size: 0.8rem;
+        padding: 6px 12px;
     }
 }
 
@@ -82,6 +106,12 @@
     .story-card-wrapper {
         max-width: 160px;
     }
+
+    .featured-badge {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+        margin-bottom: 6px;
+    }
 }
 
 @media screen and (max-height: 400px) and (orientation: landscape) {
@@ -100,6 +130,12 @@
 
     .story-card-wrapper {
         max-width: 130px;
+    }
+
+    .featured-badge {
+        font-size: 0.65rem;
+        padding: 4px 8px;
+        margin-bottom: 4px;
     }
 }
 
