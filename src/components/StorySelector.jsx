@@ -47,9 +47,6 @@ export default function StorySelector({ onSelectStory, user, onLogout, onLogin }
                             className={`story-card-wrapper no-scale${story.featured ? ' featured-card' : ''}`}
                             style={story.locked ? { opacity: 0.7, cursor: 'not-allowed' } : {}}
                         >
-                            {story.featured && (
-                                <div className="featured-badge">⭐ En Çok Tercih Edilen</div>
-                            )}
                             <ChoiceCard
                                 text={story.name}
                                 impact={story.description}
@@ -58,6 +55,9 @@ export default function StorySelector({ onSelectStory, user, onLogout, onLogin }
                                 cardImage={story.locked ? story.lockedImg : story.img}
                                 lockImage={story.lockedImg}
                             />
+                            {story.featured && (
+                                <div className="featured-badge">⭐ En Çok Tercih Edilen</div>
+                            )}
                         </div>
                     ))}
                 </div>

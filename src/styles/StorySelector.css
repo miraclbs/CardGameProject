@@ -37,6 +37,7 @@
     display: grid;
     gap: 25px;
     justify-content: center;
+    align-items: start;
     grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
     width: 100%;
 }
@@ -54,7 +55,7 @@
 .featured-badge {
     text-align: center;
     padding: 8px 16px;
-    margin-bottom: 10px;
+    margin-top: 10px;
     font-size: 0.95rem;
     font-weight: 700;
     color: #fff;
@@ -110,7 +111,7 @@
     .featured-badge {
         font-size: 0.75rem;
         padding: 5px 10px;
-        margin-bottom: 6px;
+        margin-top: 6px;
     }
 }
 
@@ -135,7 +136,7 @@
     .featured-badge {
         font-size: 0.65rem;
         padding: 4px 8px;
-        margin-bottom: 4px;
+        margin-top: 4px;
     }
 }
 
