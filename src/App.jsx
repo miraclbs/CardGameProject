@@ -20,6 +20,7 @@ import audio from "./utils/audioManager";
 export default function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
 
   const handleLogin = () => {
     setShowLoginModal(true);
@@ -41,6 +42,41 @@ export default function App() {
 
   const spaceStory = useSpaceStory(screenState.selectedStory);
   const wizardStory = useWizardStory(screenState.selectedStory);
+
+  useEffect(() => {
+    const imagesToPreload = [
+      '/img/default-bg.png',
+      '/img/default-card.png',
+      '/img/space-card.png',
+      '/img/moon-card.png',
+      '/img/detective-card-lock.png',
+      '/img/settings-btn.png',
+      '/img/moon-bg.png',
+      '/img/space-bg.png',
+      '/img/settings-bg.png',
+    ];
+
+    let loaded = 0;
+    const total = imagesToPreload.length;
+
+    const onLoad = () => {
+      loaded++;
+      if (loaded >= total) {
+        setAssetsLoaded(true);
+      }
+    };
+
+    imagesToPreload.forEach((src) => {
+      const img = new Image();
+      img.onload = onLoad;
+      img.onerror = onLoad;
+      img.src = src;
+    });
+
+    // Fallback: max 5 saniye bekle
+    const timeout = setTimeout(() => setAssetsLoaded(true), 5000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     const requestFullscreen = () => {
@@ -90,6 +126,17 @@ export default function App() {
   }, [screenState.selectedStory, activeStory.currentScene, activeStory.isLoading, activeStory]);
 
 
+  if (!assetsLoaded) {
+    return (
+      <div className="initial-loading-screen">
+        <div className="initial-loading-content">
+          <h1 className="initial-loading-title">Final Choice</h1>
+          <div className="initial-loading-spinner"></div>
+          <p className="initial-loading-text">Oyun Yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (screenState.selectedStory && (activeStory.isLoading && !activeStory.currentScene)) {
     return <LoadingScreen />;
