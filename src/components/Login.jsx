@@ -2,7 +2,7 @@ import { useState } from 'react';
 import '../styles/Login.css';
 import { useAuth } from '../hooks/useAuth';
 
-export default function Login() {
+export default function Login({ onClose }) {
     const [isLoginMode, setIsLoginMode] = useState(true);
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -28,9 +28,11 @@ export default function Login() {
         }
 
         if (isLoginMode) {
-            await login(email, password);
+            const success = await login(email, password);
+            if (success && onClose) onClose();
         } else {
-            await register(email, password, username);
+            const success = await register(email, password, username);
+            if (success && onClose) onClose();
         }
     };
 
@@ -55,6 +57,9 @@ export default function Login() {
             <div className="login-container">
                 <div className="login-card">
                     <div className="login-header">
+                        {onClose && (
+                            <button className="login-close-btn" onClick={onClose} type="button">✕</button>
+                        )}
                         <h1 className="login-title">Final Choice</h1>
                         <p className="login-subtitle">
                             {isLoginMode ? 'Hesabınıza giriş yapın' : 'Yeni hesap oluşturun'}

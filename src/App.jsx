@@ -19,6 +19,15 @@ import audio from "./utils/audioManager";
 
 export default function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleLogin = () => {
+    setShowLoginModal(true);
+  };
+
+  const handleLoginClose = () => {
+    setShowLoginModal(false);
+  };
   const { user, isLoggedIn, logout, isLoading: authLoading } = useAuth();
   const { screenState, selectStory, showIntro, showGameScreen, reset } = useScreenTransition();
   const { blinkState, handlers } = useBlinkTransition({
@@ -80,22 +89,7 @@ export default function App() {
     }
   }, [screenState.selectedStory, activeStory.currentScene, activeStory.isLoading, activeStory]);
 
-  if (authLoading) {
-    return (
-      <div className="auth-loading">
-        <div className="spinner"></div>
-      </div>
-    );
-  }
 
-  if (!isLoggedIn) {
-    return (
-      <>
-        <Cursor />
-        <Login />
-      </>
-    );
-  }
 
   if (screenState.selectedStory && (activeStory.isLoading && !activeStory.currentScene)) {
     return <LoadingScreen />;
@@ -119,7 +113,7 @@ export default function App() {
         <p>Oyunu oynamak için lütfen telefonunuzu yatay konuma çevirin</p>
       </div>
       {screenState.showSelector && (
-        <StorySelector onSelectStory={handleStorySelect} user={user} onLogout={handleLogout} />
+        <StorySelector onSelectStory={handleStorySelect} user={user} onLogout={handleLogout} onLogin={handleLogin} />
       )}
       {screenState.selectedStory && activeStory.currentScene && screenState.showIntro && (
         <StoryIntro
@@ -155,7 +149,15 @@ export default function App() {
         onClose={() => setIsSettingsOpen(false)}
         user={user}
         onLogout={handleLogout}
+        onLogin={handleLogin}
       />
+      {showLoginModal && (
+        <div className="login-modal-overlay" onClick={handleLoginClose}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Login onClose={handleLoginClose} />
+          </div>
+        </div>
+      )}
       {blinkState.showFirstBlink && (
         <BlinkTransition
           key="first-blink"

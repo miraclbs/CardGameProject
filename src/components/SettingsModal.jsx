@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/SettingsModal.css";
 import audio from "../utils/audioManager";
 
-export default function SettingsModal({ isOpen, onClose, user, onLogout }) {
+export default function SettingsModal({ isOpen, onClose, user, onLogout, onLogin }) {
     if (!isOpen) return null;
 
     const [music, setMusic] = useState(audio.musicOn);
@@ -46,11 +46,21 @@ export default function SettingsModal({ isOpen, onClose, user, onLogout }) {
                     <div className="account-section">
                         <div className="account-info">
                             <span className="account-icon">👤</span>
-                            <span className="account-name">{user?.displayName || user?.email}</span>
+                            <span className="account-name">{user ? (user.displayName || user.email) : 'Misafir'}</span>
                         </div>
-                        <button className="logout-btn" onClick={handleLogout}>
-                            Çıkış Yap
-                        </button>
+                        {user ? (
+                            <button className="logout-btn" onClick={handleLogout}>
+                                Çıkış Yap
+                            </button>
+                        ) : (
+                            <button className="logout-btn" onClick={() => {
+                                audio.playSfx();
+                                onClose();
+                                if (onLogin) onLogin();
+                            }}>
+                                Giriş Yap
+                            </button>
+                        )}
                     </div>
 
                     <div className="settings-divider"></div>
