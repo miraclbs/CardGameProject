@@ -21,6 +21,7 @@ export default function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
+  const [minTimeElapsed, setMinTimeElapsed] = useState(false);
 
   const handleLogin = () => {
     setShowLoginModal(true);
@@ -42,6 +43,12 @@ export default function App() {
 
   const spaceStory = useSpaceStory(screenState.selectedStory);
   const wizardStory = useWizardStory(screenState.selectedStory);
+
+  // Minimum 3 saniye yükleme ekranı göster
+  useEffect(() => {
+    const timer = setTimeout(() => setMinTimeElapsed(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const imagesToPreload = [
@@ -73,8 +80,8 @@ export default function App() {
       img.src = src;
     });
 
-    // Fallback: max 5 saniye bekle
-    const timeout = setTimeout(() => setAssetsLoaded(true), 5000);
+    // Fallback: max 8 saniye bekle
+    const timeout = setTimeout(() => setAssetsLoaded(true), 8000);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -126,7 +133,7 @@ export default function App() {
   }, [screenState.selectedStory, activeStory.currentScene, activeStory.isLoading, activeStory]);
 
 
-  if (!assetsLoaded) {
+  if (!assetsLoaded || !minTimeElapsed) {
     return (
       <div className="initial-loading-screen">
         <div className="initial-loading-content">
