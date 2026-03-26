@@ -12,7 +12,7 @@ class AudioManager {
         };
 
         this.storyMusic = {
-            "space": "/sounds/space-bg-song.wav",
+            "space": "/sounds/space-bg-song.mp3",
             "wizard": "/sounds/magic-bg-song.mp3",
         };
 
@@ -32,8 +32,8 @@ class AudioManager {
 
     loadSounds() {
         try {
-            this.sounds.card = new Audio("/sounds/card-click.wav");
-            this.sounds.cardLock = new Audio("/sounds/card-click-lock.wav");
+            this.sounds.card = new Audio("/sounds/card-click.mp3");
+            this.sounds.cardLock = new Audio("/sounds/card-click-lock.mp3");
             this.sounds.settings = new Audio("/sounds/settings-click.mp3");
         } catch (err) {
         }

@@ -30,6 +30,5 @@ dist-ssr
 # Mercurial
 .hg/
 
-# Large audio files
+# Large audio files (WAV originals not needed in repo)
 public/sounds/*.wav
-public/sounds/*.mp3
