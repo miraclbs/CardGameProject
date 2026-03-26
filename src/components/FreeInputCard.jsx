@@ -27,7 +27,7 @@ export default function FreeInputCard({ onSubmit, isLoading, hint }) {
             <div className="card-container input-card-container" onMouseMove={onMove} onMouseLeave={onExit}>
                 <div className="card-tilt" ref={wrapperEl}>
                     <div className="card" ref={cardEl}>
-                        <img src="/img/moon-card.png" alt="card" className="card-image" />
+                        <img src="/img/moon-card.webp" alt="card" className="card-image" />
                         <div className="card-input-overlay">
                             <div className="input-prompt">
                                 <span className="prompt-text">Ne yapıyorsun?</span>

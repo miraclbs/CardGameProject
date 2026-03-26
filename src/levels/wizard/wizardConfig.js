@@ -2,9 +2,9 @@ export const WIZARD_CONFIG = {
     id: 'wizard',
     name: 'Büyücü Maceraları',
     description: 'Sihirli dünyada kendi kararlarını ver',
-    img: '/img/moon-card.png',
-    lockedImg: '/img/moon-card-lock.png',
-    backgroundImg: '/img/moon-bg.png',
+    img: '/img/moon-card.webp',
+    lockedImg: '/img/moon-card-lock.webp',
+    backgroundImg: '/img/moon-bg.webp',
 };
 
 export const WIZARD_INTRO_SCENE = {

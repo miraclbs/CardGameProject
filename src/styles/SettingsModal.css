@@ -17,7 +17,7 @@
     padding: 0;
     border-radius: 25px;
     box-shadow: 0 0 30px rgba(48, 50, 59, 0.9);
-    background-image: url("/img/settings-bg.png");
+    background-image: url("/img/settings-bg.webp");
     background-size: 100% 100%;
     display: flex;
     flex-direction: column;

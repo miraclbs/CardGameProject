@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/img/moon-bg.png');
+  background-image: url('/img/moon-bg.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -14,7 +14,7 @@
 .login-card {
   width: 100%;
   max-width: 420px;
-  background-image: url('/img/default-card.png');
+  background-image: url('/img/default-card.webp');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -279,7 +279,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/img/moon-bg.png');
+  background-image: url('/img/moon-bg.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

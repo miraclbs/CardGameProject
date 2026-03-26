@@ -45,15 +45,15 @@ export default function App() {
 
   useEffect(() => {
     const imagesToPreload = [
-      '/img/default-bg.png',
-      '/img/default-card.png',
-      '/img/space-card.png',
-      '/img/moon-card.png',
-      '/img/detective-card-lock.png',
-      '/img/settings-btn.png',
-      '/img/moon-bg.png',
-      '/img/space-bg.png',
-      '/img/settings-bg.png',
+      '/img/default-bg.webp',
+      '/img/default-card.webp',
+      '/img/space-card.webp',
+      '/img/moon-card.webp',
+      '/img/detective-card-lock.webp',
+      '/img/settings-btn.webp',
+      '/img/moon-bg.webp',
+      '/img/space-bg.webp',
+      '/img/settings-bg.webp',
     ];
 
     let loaded = 0;

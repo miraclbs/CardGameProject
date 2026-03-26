@@ -30,7 +30,7 @@ body {
   height: 100dvh;
   width: 100%;
   overflow: hidden;
-  background-image: url('/img/begin-background.png');
+  background-image: url('/img/begin-background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

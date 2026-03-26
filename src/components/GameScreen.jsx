@@ -46,14 +46,14 @@ export default function GameScreen({
             <div className="app" style={appStyle}>
                 <div className="top-left-buttons">
                     <img
-                        src="/img/home.png"
+                        src="/img/home.webp"
                         alt="Ana Menü"
                         className="menu-icon"
                         onClick={onBackToMenu}
                         title="Ana Menüye Dön"
                     />
                     <img
-                        src="/img/story.png"
+                        src="/img/story.webp"
                         alt="Hikaye Özeti"
                         className="menu-icon"
                         onClick={() => setIsStoryModalOpen(true)}

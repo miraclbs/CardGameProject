@@ -13,8 +13,8 @@ export const LEVELS = {
         name: 'Gizli Cinayet',
         description: 'Gizemli olaylara karsi bir dedektif olarak sorusturma yurut',
         locked: true,
-        img: '/img/detective-card.png',
-        lockedImg: '/img/detective-card-lock.png'
+        img: '/img/detective-card.webp',
+        lockedImg: '/img/detective-card-lock.webp'
     }
 };
 

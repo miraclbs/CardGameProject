@@ -9,7 +9,7 @@ export default function SettingsButton({ onSettingsClick }) {
 
     return (
         <img
-            src="/img/settings-btn.png"
+            src="/img/settings-btn.webp"
             alt="Ayarlar"
             className="settings-icon"
             onClick={settingsClick}

@@ -2,9 +2,9 @@ export const SPACE_CONFIG = {
     id: 'space',
     name: 'Uzay Macerası',
     description: 'Uzayda hayatta kalma mücadelesi',
-    img: '/img/space-card.png',
-    lockedImg: '/img/space-card-lock.png',
-    backgroundImg: '/img/space-bg.png',
+    img: '/img/space-card.webp',
+    lockedImg: '/img/space-card-lock.webp',
+    backgroundImg: '/img/space-bg.webp',
 };
 
 export const SPACE_INTRO_SCENE = {

@@ -19,13 +19,13 @@ export default function GameOver({ onRestart, onBackToMenu }) {
                     </h1>
                     <div className="game-over-buttons">
                         <img
-                            src="/img/again.png"
+                            src="/img/again.webp"
                             alt="Tekrar Oyna"
                             onClick={onRestart}
                             className="game-over-icon"
                         />
                         <img
-                            src="/img/home.png"
+                            src="/img/home.webp"
                             alt="Ana Menü"
                             onClick={onBackToMenu}
                             className="game-over-icon"
