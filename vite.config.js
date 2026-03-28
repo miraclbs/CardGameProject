@@ -7,12 +7,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/openai': {
-        target: 'https://api.openai.com',
+        target: 'https://api.openai.com/v1/chat/completions',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/openai/, ''),
+        rewrite: (path) => '',
         configure: (proxy, options) => {
           proxy.on('proxyReq', (proxyReq, req, res) => {
-            // API key'i env'den al ve header'a ekle
             const apiKey = process.env.VITE_OPENAI_API_KEY;
             if (apiKey) {
               proxyReq.setHeader('Authorization', `Bearer ${apiKey}`);

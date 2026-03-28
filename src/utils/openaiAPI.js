@@ -1,7 +1,6 @@
 import { buildSystemPrompt, buildUserPrompt } from './promptBuilder';
 
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
-const API_URL = "/api/openai/v1/chat/completions";
+const API_URL = "/api/openai";
 
 async function callOpenAI(systemPrompt, userPrompt, temperature = 0.7, maxTokens = 800) {
     try {
@@ -9,7 +8,6 @@ async function callOpenAI(systemPrompt, userPrompt, temperature = 0.7, maxTokens
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + API_KEY,
             },
             body: JSON.stringify({
                 model: "gpt-4o-mini",
